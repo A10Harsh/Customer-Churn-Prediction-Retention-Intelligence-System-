@@ -8,3 +8,5 @@ https://colab.research.google.com/drive/1lqboF6sQISR4MkN1PCFTyzIRVMTt06VH?authus
 ANN+SHAP notebooks : https://colab.research.google.com/drive/1OR6HgEslS8fwK3NZ0tNstKNWR-qVa1uD?authuser=1#scrollTo=gMLKSoK6S-bY
 
 XGBoost+ Shap Notebooks : https://colab.research.google.com/drive/1AnHu-dmiwGw0aEVv2MCGKE4F9Y5QmL1O?authuser=1#scrollTo=AdtyiS5ElKIi
+
+Random Forest + shap notebooks : https://colab.research.google.com/drive/1u1M5FqY9QX9kah3koKSVCkQe0GAchKqd?authuser=1#scrollTo=howyjoYXsrye
