@@ -24,37 +24,35 @@ Build a decision-support system for customer retention
 Methodology
 1. Churn Prediction
 
-Multiple models are trained and evaluated:
+Multiple models are trained and evaluated: Random Forest,  XGBoost (final selected model), Artificial Neural Network (ANN)
 
-Random Forest
-XGBoost (final selected model)
-Artificial Neural Network (ANN)
 2. Explainability (SHAP)
 
-SHAP (SHapley Additive exPlanations) is used to:cInterpret model predictions
+SHAP (SHapley Additive exPlanations) is used to : Interpret model predictions
 Identify top features influencing churn for each customer
-3. Action Mapping Enginec: Key churn drivers are mapped to predefined business actions:
 
-Feature	Action
-MonthlyCharges	Offer discount / alternative plan
-tenure	Provide onboarding or engagement offers
-Contract	Encourage long-term subscription
-TechSupport	Offer free or discounted support
-OnlineSecurity	Promote security add-ons
-4. Business Rule Filtering
+3. Action Mapping Enginec:
+Key churn drivers are mapped to predefined business actions:
+Feature - Action
+MonthlyCharges -	Offer discount / alternative plan
+tenure - Provide onboarding or engagement offers
+Contract -	Encourage long-term subscription
+TechSupport	- Offer free or discounted support
+OnlineSecurity	- Promote security add-ons
 
+5. Business Rule Filtering
 Actions are refined using domain-specific constraints:
+Discounts applied only to high-paying customers,
+Tech support offered only if not already subscribed,
+Contract upgrade suggested for monthly users,
 
-Discounts applied only to high-paying customers
-Tech support offered only if not already subscribed
-Contract upgrade suggested for monthly users
-5. GenAI Personalization Layer
+6. GenAI Personalization Layer
 
 Generative AI converts structured actions into:
 
-Human-like retention strategies
-Personalized customer messages
-Justifications for recommendations
+Human-like retention strategies,
+Personalized customer messages,
+Justifications for recommendations,
 
 Here are the notebooks 
 
