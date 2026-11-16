@@ -1,19 +1,28 @@
-# Virtual environment
+# Local environments and caches
+.venv/
 venv/
 env/
-.venv
-# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 
-# VS Code settings
-.vscode/
-
-# OS files
-.DS_Store
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
-
-# Environment variables
+# Local configuration and secrets
 .env
+.env.*
+!.env.example
+
+# Data and experiment outputs
+data/**
+!data/**/
+!data/**/.gitkeep
+!data/**/*.dvc
+!data/**/.gitignore
+mlruns/
+mlartifacts/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+.ipynb_checkpoints/
