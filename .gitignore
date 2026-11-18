@@ -26,3 +26,12 @@ mlartifacts/
 .vscode/
 .DS_Store
 .ipynb_checkpoints/
+# Keep project Codex configuration, hooks, and skills reviewable while ignoring
+# any other machine-local state created under .codex.
+.codex/*
+!.codex/config.toml
+!.codex/hooks.json
+!.codex/hooks/
+!.codex/hooks/**
+!.codex/skills/
+!.codex/skills/**
