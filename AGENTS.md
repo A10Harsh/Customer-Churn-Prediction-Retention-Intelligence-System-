@@ -9,10 +9,10 @@ Build a production-style customer churn retention system that predicts churn, ex
 
 - Python 3.11; PostgreSQL in Docker with `raw`, `staging`, `features`, and `predictions` schemas.
 - Pandera for data validation; DVC for dataset and model artifact versioning.
-- scikit-learn, XGBoost (primary model), and Optuna for modeling and tuning.
-- PyTorch is optional: use it only for a small comparison MLP in Phase 4, and only after the XGBoost baseline is logged. Do not add it to the serving path.
+- scikit-learn for logistic regression and Random Forest, XGBoost, PyTorch for the ANN experiment, and Optuna for tuning.
+- Implement the ANN directly in PyTorch through a serializable scikit-learn-compatible adapter. Do not use `MLPClassifier`; an approved PyTorch ANN may enter the serving path with its pinned runtime.
 - MLflow for experiment tracking and model registry; SHAP for explanations.
-- GenAI Next-Best-Action: Anthropic API with RAG (FAISS) over a retention playbook; Pydantic for schema-validated structured output.
+- GenAI Next-Best-Action: Anthropic API  over a retention playbook; Pydantic for schema-validated structured output.
 - FastAPI for serving; Prefect for orchestration; Streamlit for the dashboard.
 - Evidently for monitoring; Docker and docker-compose for local environments; GitHub Actions for CI/CD.
 
@@ -21,7 +21,7 @@ Build a production-style customer churn retention system that predicts churn, ex
 ```text
 churn-retention-system/
 ├── AGENTS.md
-├── .codex/                   # agent config; read-only unless   asked
+├── .codex/                   # agent config;
 ├── pyproject.toml
 ├── .env.example              # required variable names only, no values
 ├── docker-compose.yml        # postgres, mlflow, api, dashboard
@@ -68,7 +68,7 @@ Put new code in the folder that matches its purpose. Ask before creating new top
 - Calibrate probabilities (isotonic or Platt) on validation data, not on test.
 - Choose the decision threshold on validation using a cost-based rule from `configs/` (cost of a missed churner vs cost of an unnecessary offer). Log the comparison. Changing the threshold requires asking first.
 - Log every run to MLflow with seed, data version (DVC hash), parameters, and metrics.
-- MLflow experiment name: `churn-retention`. Registered model name: `churn-xgb`. Champion promotion requires asking first.
+- MLflow experiment name: `churn-retention`. Registered model name: `churn-classifier`. Champion promotion requires asking first.
 
 ## GenAI Next-Best-Action
 
@@ -85,7 +85,7 @@ Work on one phase at a time. A phase is done only when its criteria are met and 
 1. **Scaffold** (done): repository, config, hooks.
 2. **Database and ingestion**: Docker Postgres up; `database/schema.sql` creates the four schemas; raw CSV loaded to `raw`; staging transform; Pandera schema validates staging; tests pass.
 3. **Features**: `database/feature_views.sql` plus a `src/features/` sklearn pipeline used identically by training and serving; leakage and train/serve parity tests pass.
-4. **Training**: stratified split, XGBoost baseline, Optuna tuning, calibration, threshold selection, MLflow logging; optional PyTorch MLP comparison. Metrics come only from logged runs.
+4. **Training**: stratified split, required logistic-regression baseline, comparable Random Forest/XGBoost/PyTorch ANN experiments, Optuna tuning, calibration, threshold selection, and MLflow logging. Every family is serving-eligible after passing the same approval and operational gates. Metrics come only from logged runs.
 5. **Explainability**: SHAP global summary and per-customer top drivers; outputs saved and tested for shape and determinism.
 6. **GenAI NBA**: playbook, FAISS retrieval, prompts, Pydantic schema, guardrails, fake-client tests, small eval set.
 7. **Serving**: FastAPI `/predict`, `/batch-predict`, `/recommend` with request/response schema tests; predictions written to the `predictions` schema.

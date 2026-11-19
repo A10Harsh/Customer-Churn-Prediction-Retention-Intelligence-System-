@@ -30,6 +30,7 @@ mlartifacts/
 # any other machine-local state created under .codex.
 .codex/*
 !.codex/config.toml
+!.codex/spec.md
 !.codex/hooks.json
 !.codex/hooks/
 !.codex/hooks/**

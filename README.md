@@ -8,7 +8,7 @@ Customer churn is a critical challenge in the telecom industry, directly impacti
 This project bridges that gap by developing a GenAI-powered Next Best Action (NBA) framework that transforms churn predictions into personalized, explainable, and actionable retention strategies.
 
 The system integrates:
-Predictive modeling (Random Forest, XGBoost, ANN)
+Predictive modeling (Logistic regression, Random Forest, XGBoost, PyTorch ANN)
 Explainable AI using SHAP
 Rule-based decision intelligence
 Generative AI for personalized recommendations
@@ -24,7 +24,7 @@ Build a decision-support system for customer retention
 Methodology
 1. Churn Prediction
 
-Multiple models are trained and evaluated: Random Forest,  XGBoost (final selected model), Artificial Neural Network (ANN)
+Logistic regression is the required baseline. Random Forest, XGBoost, and a direct PyTorch Artificial Neural Network (ANN) are trained as challengers on the same data splits and evaluated against that baseline. Any approved winner, including the PyTorch ANN, may be served through the common prediction interface.
 
 2. Explainability (SHAP)
 
