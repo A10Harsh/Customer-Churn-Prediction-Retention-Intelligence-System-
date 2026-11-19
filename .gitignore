@@ -36,3 +36,5 @@ mlartifacts/
 !.codex/hooks/**
 !.codex/skills/
 !.codex/skills/**
+!.codex/agents/
+!.codex/agents/**
