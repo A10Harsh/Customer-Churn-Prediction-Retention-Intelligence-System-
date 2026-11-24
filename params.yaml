@@ -1,0 +1,18 @@
+project:
+  name: customer-retention-intelligence
+  random_state: 42
+
+data:
+  raw_path: data/raw/telco_customer_churn.csv
+  target_column: Churn
+  id_column: customerID
+  test_size: 0.20
+
+validation:
+  cv_folds: 5
+
+artifacts:
+  directory: artifacts
+
+reports:
+  directory: reports

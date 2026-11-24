@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-# Activate with: git config core.hooksPath .github/hooks
-set -eu
-
-repo_root="$(git rev-parse --show-toplevel)"
-exec "$repo_root/.venv/bin/pre-commit" run
