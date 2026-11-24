@@ -1,0 +1,41 @@
+stages:
+  ingest:
+    cmd: .venv/bin/python -m src.churn_phase2 ingest
+    deps:
+      - data/raw/Telco-Customer-Churn.csv
+      - src/churn_phase2.py
+      - database/schema.sql
+      - database/staging.sql
+      - configs/phase2.yaml
+    outs:
+      - data/processed/ingest_manifest.json
+  validate:
+    cmd: .venv/bin/python -m src.churn_phase2 validate
+    deps:
+      - data/processed/ingest_manifest.json
+      - src/churn_phase2.py
+      - configs/phase2.yaml
+    outs:
+      - data/processed/validation_report.json
+      - data/processed/structure_profile.json
+  split:
+    cmd: .venv/bin/python -m src.churn_phase2 split
+    deps:
+      - data/processed/validation_report.json
+      - src/churn_phase2.py
+      - configs/phase2.yaml
+    outs:
+      - data/interim/train.csv
+      - data/interim/validation.csv
+      - data/interim/test.csv
+      - data/processed/split_manifest.json
+  analyze:
+    cmd: .venv/bin/python -m src.churn_phase2 analyze
+    deps:
+      - data/interim/train.csv
+      - data/processed/structure_profile.json
+      - src/churn_phase2.py
+      - configs/phase2.yaml
+    outs:
+      - data/processed/analysis_metrics.json
+      - docs/data-analysis-report.md

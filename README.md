@@ -1,5 +1,31 @@
 # Customer-Churn-Prediction-Retention-Intelligence-System
 
+## Phase 2: data ingestion and analysis
+
+The raw IBM Telco CSV is kept at `data/raw/Telco-Customer-Churn.csv` and
+tracked with DVC metadata. Its original copy is preserved. Source values are
+loaded unchanged into `raw.telco_customers`; the typed `staging` table maps
+`Churn` to 0/1 and blank `TotalCharges` to NULL. The four database schemas are
+defined in `database/schema.sql`.
+
+Set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` in your local
+environment. Do not commit their values. For a local PostgreSQL service, use
+`DB_HOST=127.0.0.1` and a free local port. Then run:
+
+```sh
+docker compose up -d postgres
+.venv/bin/python -m src.churn_phase2 bootstrap
+.venv/bin/dvc repro
+.venv/bin/pytest -m integration
+```
+
+`dvc.yaml` orders ingest, validate, split, and analyze. The fixed split uses
+seed 42. Customer-bearing partitions are under `data/interim/`, and aggregate
+metrics and manifests are under `data/processed/`. The report is generated at
+`docs/data-analysis-report.md`. Run `dvc repro -f ingest` after restoring a
+lost database volume because DVC cannot detect external PostgreSQL state.
+Do not run `docker compose down -v`: it would remove the database volume.
+
 
 
 

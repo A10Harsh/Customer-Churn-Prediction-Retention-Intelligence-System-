@@ -29,8 +29,13 @@ mlartifacts/
 # Keep project Codex configuration, hooks, and skills reviewable while ignoring
 # any other machine-local state created under .codex.
 .codex/*
+**/__pycache__/
 !.codex/config.toml
 !.codex/spec.md
+!.codex/spec/
+!.codex/spec/**
+!.codex/plans/
+!.codex/plans/**
 !.codex/hooks.json
 !.codex/hooks/
 !.codex/hooks/**
@@ -38,3 +43,4 @@ mlartifacts/
 !.codex/skills/**
 !.codex/agents/
 !.codex/agents/**
+**/__pycache__/
