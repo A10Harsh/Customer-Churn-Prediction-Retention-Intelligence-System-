@@ -1,46 +1,69 @@
-# Local environments and caches
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
 .venv/
 venv/
 env/
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
 
-# Local configuration and secrets
+# Environment variables and secrets
 .env
 .env.*
 !.env.example
+*.pem
+*.key
 
-# Data and experiment outputs
-data/**
-!data/**/
-!data/**/.gitkeep
-!data/**/*.dvc
-!data/**/.gitignore
+# macOS
+.DS_Store
+
+# IDE and local AI tooling
+.vscode/
+.idea/
+.codex/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing and linting
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Logs
+logs/
+*.log
+
+# Local MLflow storage
 mlruns/
 mlartifacts/
+mlflow.db
 
-# Editor and OS files
-.vscode/
-.DS_Store
-.ipynb_checkpoints/
-# Keep project Codex configuration, hooks, and skills reviewable while ignoring
-# any other machine-local state created under .codex.
-.codex/*
-**/__pycache__/
-!.codex/config.toml
-!.codex/spec.md
-!.codex/spec/
-!.codex/spec/**
-!.codex/plans/
-!.codex/plans/**
-!.codex/hooks.json
-!.codex/hooks/
-!.codex/hooks/**
-!.codex/skills/
-!.codex/skills/**
-!.codex/agents/
-!.codex/agents/**
-**/__pycache__/
+# Local databases
+*.sqlite
+*.sqlite3
+
+# Generated data
+/data/interim/*
+!/data/interim/.gitkeep
+
+/data/processed/*
+!/data/processed/.gitkeep
+
+# Generated model artifacts
+/artifacts/*
+!/artifacts/.gitkeep
+
+# Generated reports
+/reports/generated/
+
+# Local Docker storage
+/postgres_data/
+
+# Streamlit secrets
+.streamlit/secrets.toml
