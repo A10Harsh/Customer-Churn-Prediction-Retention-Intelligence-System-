@@ -3,7 +3,11 @@ name = "churn-retention-system"
 version = "0.1.0"
 description = "Customer churn prediction and retention system"
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+    "pandas>=2.2,<3", "pandera[pandas]>=0.24,<1", "sqlalchemy>=2,<3",
+    "psycopg[binary]>=3,<4", "scikit-learn>=1.5,<2", "scipy>=1.11,<2",
+    "dvc>=3,<4", "pyyaml>=6,<7",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -23,7 +27,8 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-addopts = "-ra"
+addopts = "-ra -m 'not integration'"
+markers = ["integration: requires a local PostgreSQL service"]
 
 [build-system]
 requires = ["setuptools>=68"]
