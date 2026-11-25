@@ -6,7 +6,13 @@ data:
   raw_path: data/raw/Telco-Customer-Churn.csv
   ingested_path: data/interim/ingested.parquet
   validated_path: data/interim/validated.parquet
+
+  development_path: data/processed/development.parquet
+  test_path: data/processed/test.parquet
+
   quality_report_path: reports/generated/data_quality.json
+  split_report_path: reports/generated/split_report.json
+
   target_column: Churn
   id_column: customerID
   test_size: 0.20
