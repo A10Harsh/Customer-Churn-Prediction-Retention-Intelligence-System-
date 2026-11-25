@@ -1,0 +1,45 @@
+stages:
+  ingest:
+    desc: Ingest and normalize the raw customer dataset.
+
+    cmd: python -m retention.data.ingestion
+
+    deps:
+      - ${data.raw_path}
+      - src/retention/data/ingestion.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - data.raw_path
+      - data.ingested_path
+      - ingestion.encoding
+      - ingestion.strip_whitespace
+
+    outs:
+      - ${data.ingested_path}
+
+  validate:
+    desc: Validate dataset schema and business rules.
+
+    cmd: python -m retention.data.validation
+
+    deps:
+      - ${data.ingested_path}
+      - src/retention/data/validation.py
+      - src/retention/data/schemas.py
+      - src/retention/data/quality.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - data.ingested_path
+      - data.validated_path
+      - data.quality_report_path
+      - validation.fill_zero_tenure_total_charges
+
+    outs:
+      - ${data.validated_path}
+      - ${data.quality_report_path}

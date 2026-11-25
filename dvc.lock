@@ -1,0 +1,82 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python -m retention.data.ingestion
+    deps:
+    - path: data/raw/Telco-Customer-Churn.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: requirements-lock.txt
+      hash: md5
+      md5: 5e022620ee7320d35fcfd0c88eec2d9e
+      size: 4718
+    - path: src/retention/data/ingestion.py
+      hash: md5
+      md5: 88019786337e139f3266fee4cf0a1938
+      size: 2721
+    - path: src/retention/utils/config.py
+      hash: md5
+      md5: 2658fdfd60190e4d944e3665bee1671c
+      size: 580
+    - path: src/retention/utils/logger.py
+      hash: md5
+      md5: e0bbecf3e627fbfba26277276d2f8c44
+      size: 1072
+    params:
+      params.yaml:
+        data.ingested_path: data/interim/ingested.parquet
+        data.raw_path: data/raw/Telco-Customer-Churn.csv
+        ingestion.encoding: utf-8
+        ingestion.strip_whitespace: true
+    outs:
+    - path: data/interim/ingested.parquet
+      hash: md5
+      md5: 220f9e3276003d08f96b49a764fbdd3e
+      size: 201419
+  validate:
+    cmd: python -m retention.data.validation
+    deps:
+    - path: data/interim/ingested.parquet
+      hash: md5
+      md5: 220f9e3276003d08f96b49a764fbdd3e
+      size: 201419
+    - path: requirements-lock.txt
+      hash: md5
+      md5: 5e022620ee7320d35fcfd0c88eec2d9e
+      size: 4718
+    - path: src/retention/data/quality.py
+      hash: md5
+      md5: b54486b1d1f4a5ae72c5361b4b48aff2
+      size: 1395
+    - path: src/retention/data/schemas.py
+      hash: md5
+      md5: ca89e49b8fea9fb1882ef3231d4d0aa5
+      size: 3761
+    - path: src/retention/data/validation.py
+      hash: md5
+      md5: 21da24b85bb47415f1d983ba16189eeb
+      size: 7219
+    - path: src/retention/utils/config.py
+      hash: md5
+      md5: 2658fdfd60190e4d944e3665bee1671c
+      size: 580
+    - path: src/retention/utils/logger.py
+      hash: md5
+      md5: e0bbecf3e627fbfba26277276d2f8c44
+      size: 1072
+    params:
+      params.yaml:
+        data.ingested_path: data/interim/ingested.parquet
+        data.quality_report_path: reports/generated/data_quality.json
+        data.validated_path: data/interim/validated.parquet
+        validation.fill_zero_tenure_total_charges: true
+    outs:
+    - path: data/interim/validated.parquet
+      hash: md5
+      md5: fc41565bf7bb96a0dd0bfae4f8f5c87c
+      size: 195335
+    - path: reports/generated/data_quality.json
+      hash: md5
+      md5: bb802db922c3f7710ab50bffe25419d3
+      size: 2948
