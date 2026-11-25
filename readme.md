@@ -42,12 +42,23 @@ ruff check .
 ruff format --check .
 ```
 
+
+##exection commands
+
+dvc pull
+dvc repro
+dvc dag
+pytest
+
 ## Project Status
 
-Under active development.
 
-Phase 1: Repository initialization and development environment setup.
-
+- [x] Phase 1: Project initialization
+- [x] Phase 2: Data ingestion and validation
+- [ ] Phase 3: EDA, statistical analysis and feature engineering
+- [ ] Phase 4: Machine learning
+- [ ] Phase 5: Deep learning
+- [ ] Phase 6: Experimentation and model selection
 ## Disclaimer
 
 This project is an educational implementation using historical customer data. Retention recommendations are decision-support outputs and are not evidence of actual treatment effectiveness.
