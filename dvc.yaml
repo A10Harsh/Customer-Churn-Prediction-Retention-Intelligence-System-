@@ -100,3 +100,32 @@ stages:
 
     outs:
       - ${eda.report_directory}
+
+  statistical_analysis:
+    desc: Generate leakage-safe inferential and multicollinearity reports.
+
+    cmd: python -m retention.analysis.statistical_analysis
+
+    deps:
+      - ${data.development_path}
+      - src/retention/analysis/__init__.py
+      - src/retention/analysis/association.py
+      - src/retention/analysis/inference.py
+      - src/retention/analysis/multiplicity.py
+      - src/retention/analysis/multicollinearity.py
+      - src/retention/analysis/reporting.py
+      - src/retention/analysis/statistical_analysis.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - project.random_state
+      - data.development_path
+      - data.target_column
+      - data.id_column
+      - eda.categorical_features
+      - statistical_analysis
+
+    outs:
+      - ${statistical_analysis.output_directory}

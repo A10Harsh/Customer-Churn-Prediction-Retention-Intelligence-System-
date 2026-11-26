@@ -163,8 +163,8 @@ stages:
       size: 6657
     - path: src/retention/analysis/reporting.py
       hash: md5
-      md5: 3bb9ebaa4c47a29ab3c332224aca9ea5
-      size: 3527
+      md5: 72c3158fea620a3cd030d6908fb6ac72
+      size: 6452
     - path: src/retention/analysis/segmentation.py
       hash: md5
       md5: 27ceea377f91f20d5a59e455f1262ef3
@@ -242,3 +242,106 @@ stages:
       md5: e6bcf030b5bcbe6da009c1c74e8d455d.dir
       size: 592520
       nfiles: 35
+  statistical_analysis:
+    cmd: python -m retention.analysis.statistical_analysis
+    deps:
+    - path: data/processed/development.parquet
+      hash: md5
+      md5: 14512c79f531d1d0ec5a053c30fef483
+      size: 160039
+    - path: requirements-lock.txt
+      hash: md5
+      md5: a9f19682eed3a9de20d94c4bf5f81aa8
+      size: 5833
+    - path: src/retention/analysis/__init__.py
+      hash: md5
+      md5: 626b05184d9dc98a419fa4c238ecd61d
+      size: 77
+    - path: src/retention/analysis/association.py
+      hash: md5
+      md5: b68b254a6cedff16b781f6c19adf8a9e
+      size: 6695
+    - path: src/retention/analysis/inference.py
+      hash: md5
+      md5: 9bb09c13aa74a7854a1903d61dae4ce7
+      size: 7407
+    - path: src/retention/analysis/multicollinearity.py
+      hash: md5
+      md5: 7630a8320b98d11dc53b6937bd908fc4
+      size: 4879
+    - path: src/retention/analysis/multiplicity.py
+      hash: md5
+      md5: 23ffdbb051b24a9e5fbfcc230f653a20
+      size: 2935
+    - path: src/retention/analysis/reporting.py
+      hash: md5
+      md5: 72c3158fea620a3cd030d6908fb6ac72
+      size: 6452
+    - path: src/retention/analysis/statistical_analysis.py
+      hash: md5
+      md5: b1574b5af5ac0ab6d73129937619c8a9
+      size: 18532
+    - path: src/retention/utils/config.py
+      hash: md5
+      md5: 2658fdfd60190e4d944e3665bee1671c
+      size: 580
+    - path: src/retention/utils/logger.py
+      hash: md5
+      md5: e0bbecf3e627fbfba26277276d2f8c44
+      size: 1072
+    params:
+      params.yaml:
+        data.development_path: data/processed/development.parquet
+        data.id_column: customerID
+        data.target_column: Churn
+        eda.categorical_features:
+        - gender
+        - SeniorCitizen
+        - Partner
+        - Dependents
+        - PhoneService
+        - MultipleLines
+        - InternetService
+        - OnlineSecurity
+        - OnlineBackup
+        - DeviceProtection
+        - TechSupport
+        - StreamingTV
+        - StreamingMovies
+        - Contract
+        - PaperlessBilling
+        - PaymentMethod
+        project.random_state: 42
+        statistical_analysis:
+          significance_level: 0.05
+          fdr_threshold: 0.05
+          confidence_level: 0.95
+          registered_predictors:
+            numerical:
+              HYP-01: tenure
+              HYP-02: MonthlyCharges
+              HYP-03: TotalCharges
+            categorical:
+              HYP-04: Contract
+              HYP-05: InternetService
+              HYP-06: PaymentMethod
+              HYP-07: TechSupport
+              HYP-08: OnlineSecurity
+              HYP-09: PaperlessBilling
+              HYP-10a: gender
+              HYP-10b: SeniorCitizen
+              HYP-10c: Partner
+              HYP-10d: Dependents
+            confidence_segments:
+            - Contract
+          minimum_segment_size: 30
+          vif_screening_thresholds:
+          - 5.0
+          - 10.0
+          output_directory: reports/generated/statistical_analysis
+    outs:
+    - path: reports/generated/statistical_analysis
+      hash: md5
+      md5: 6881fa1216e788dd220590c34cf2fc8c.dir
+      size: 18066
+      nfiles: 7

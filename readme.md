@@ -2,8 +2,9 @@
 
 An end-to-end, production-oriented customer retention intelligence system. The
 implemented foundation currently provides validated data ingestion, reproducible
-development/hold-out splitting, exploratory notebooks, and automated development-
-data EDA reporting. Modeling and recommendation capabilities remain planned.
+development/hold-out splitting, exploratory notebooks, automated development-data
+EDA, and reproducible statistical reporting. Modeling and recommendation
+capabilities remain planned.
 
 ## Business Objective
 
@@ -17,10 +18,13 @@ IBM Telco Customer Churn dataset.
 
 - Schema and business-rule validation with Pandera
 - Reproducible stratified development/hold-out split
-- DVC pipeline: `ingest -> validate -> split -> eda`
-- Seven development-only exploratory notebooks
-- Reusable descriptive, association, segmentation, and outlier analysis modules
+- DVC pipeline with separate EDA and statistical-analysis branches after `split`
+- Fifteen executed development-only analytical notebooks
+- Reusable descriptive, inference, multiplicity, multicollinearity, segmentation,
+  and outlier analysis modules
 - Deterministic JSON, CSV, PNG, and HTML EDA reports
+- Deterministic confidence-interval, hypothesis-test, adjusted-p-value, and
+  multicollinearity reports
 - Atomic report publication and explicit held-out-data access protection
 - Automated tests for pipeline correctness, failure handling, and reproducibility
 
@@ -74,6 +78,12 @@ Run only the automated EDA stage directly with:
 python -m retention.analysis.eda
 ```
 
+Run only the automated statistical-analysis stage with:
+
+```bash
+python -m retention.analysis.statistical_analysis
+```
+
 The stage reads only `data/processed/development.parquet`. Generated artifacts are
 written to `reports/generated/eda/`:
 
@@ -83,8 +93,11 @@ written to `reports/generated/eda/`:
 - `figures/`: noninteractive PNG figures
 
 See [the automated EDA documentation](docs/eda_pipeline.md) and
-[the data-pipeline documentation](docs/data_pipeline.md) for definitions,
-dependencies, leakage controls, and limitations.
+[the statistical-analysis documentation](docs/statistical_analysis.md), plus
+[the data-pipeline documentation](docs/data_pipeline.md), for definitions,
+dependencies, leakage controls, and limitations. Statistical artifacts are written
+to `reports/generated/statistical_analysis/` as strict JSON, five focused CSV
+tables, and a standalone HTML report.
 
 ## Development Checks
 
@@ -103,8 +116,11 @@ rewriting completed artifacts.
 ## Data-Leakage Boundary
 
 - Automated EDA may read only the development split.
+- Automated statistical analysis may read only the development split.
 - The held-out split is reserved for later final model evaluation.
 - EDA associations are descriptive and do not perform feature selection.
+- Statistical tests are EDA-informed exploratory evidence, not independent
+  confirmation or causal effects.
 - No learned preprocessing, class balancing, or supervised model training has
   been implemented.
 
@@ -113,7 +129,7 @@ rewriting completed artifacts.
 - [x] Phase 1: Project initialization
 - [x] Phase 2: Data ingestion and validation
 - [x] Phase 3A: Development-data EDA and automated reporting
-- [ ] Phase 3B: Statistical hypothesis testing
+- [x] Phase 3B: Statistical hypothesis testing and automated reporting
 - [ ] Phase 3C: Feature engineering
 - [ ] Phase 4: Machine learning
 - [ ] Phase 5: Deep learning
