@@ -33,6 +33,12 @@ analysis = [
     "jupyterlab>=4,<5",
     "ipykernel>=6,<8",
 ]
+
+training = [
+    "xgboost>=3.2,<4",
+    "mlflow>=3.18,<4",
+    "matplotlib>=3.8,<4",
+]
 [tool.setuptools.packages.find]
 where = ["src"]
 
