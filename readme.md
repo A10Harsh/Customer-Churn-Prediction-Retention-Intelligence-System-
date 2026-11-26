@@ -4,7 +4,8 @@ An end-to-end, production-oriented customer retention intelligence system. The
 implemented foundation currently provides validated data ingestion, reproducible
 development/hold-out splitting, exploratory notebooks, automated development-data
 EDA, reproducible statistical reporting, and reusable feature preprocessing.
-Modeling and recommendation capabilities remain planned.
+Classical model training and local experiment tracking are implemented;
+deep learning and recommendation capabilities remain planned.
 
 ## Business Objective
 
@@ -30,15 +31,19 @@ IBM Telco Customer Churn dataset.
 - Six deterministic candidate features and cloneable baseline/engineered
   preprocessing pipelines for linear, neural, and tree model families
 - Explicit feature subsets and leakage-safe target separation (`No=0`, `Yes=1`)
+- Five-fold stratified classical-model experiments with a dummy reference,
+  Logistic Regression, Random Forest, XGBoost, class-weight comparisons,
+  out-of-fold evaluation, and local MLflow tracking
 
 ## Planned Capabilities
 
-- Customer churn probability estimation
+- Final customer churn probability model and held-out evaluation
 - Customer risk segmentation
-- Machine learning and deep learning model benchmarking
+- Deep learning model benchmarking
 - Customer-level SHAP explanations
 - LLM-powered Next-Best-Action recommendations
-- Experiment tracking and model versioning
+- Model versioning and registry
+- Hyperparameter optimization, threshold selection, and probability calibration
 - REST API and interactive analytics dashboard
 - Data drift and model performance monitoring
 - Automated testing and CI/CD
@@ -46,7 +51,7 @@ IBM Telco Customer Churn dataset.
 ## Current Technology Stack
 
 Python 3.11, pandas, NumPy, SciPy, scikit-learn, Pandera, PyArrow,
-Matplotlib, seaborn, DVC, Pytest, and Ruff.
+Matplotlib, seaborn, XGBoost, MLflow, DVC, Pytest, and Ruff.
 
 ## Local Setup
 
@@ -54,7 +59,7 @@ Matplotlib, seaborn, DVC, Pytest, and Ruff.
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev,analysis]"
+python -m pip install -e ".[dev,analysis,training]"
 python -m pip check
 ```
 
@@ -104,6 +109,15 @@ tables, and a standalone HTML report.
 
 For feature definitions, the six preprocessing configurations, and future
 cross-validation usage, see [feature preprocessing](docs/preprocessing.md).
+For classical model architecture, commands, metrics, and initial development
+results, see [model training](docs/model_training.md).
+
+Run all 13 classical experiments and launch the local run browser with:
+
+```bash
+python -m retention.models.training --config params.yaml
+mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
+```
 
 ## Development Checks
 
@@ -128,10 +142,9 @@ rewriting completed artifacts.
 - Statistical tests are EDA-informed exploratory evidence, not independent
   confirmation or causal effects.
 - Feature engineering is customer-local. Imputation, scaling, and categorical
-  mappings are learned only when a preprocessing pipeline is fitted; future
-  model evaluation must fit it inside each training fold.
-- No globally preprocessed dataset, class balancing, or supervised model
-  training has been implemented.
+  mappings are fitted separately inside each training fold.
+- No globally preprocessed dataset, resampling, or held-out model evaluation
+  has been implemented.
 
 ## Project Status
 
@@ -140,7 +153,8 @@ rewriting completed artifacts.
 - [x] Phase 3A: Development-data EDA and automated reporting
 - [x] Phase 3B: Statistical hypothesis testing and automated reporting
 - [x] Phase 3C: Feature engineering and preprocessing readiness
-- [ ] Phase 4: Machine learning
+- [x] Phase 3D: Class imbalance comparison
+- [x] Phase 4: Initial classical machine learning and MLflow tracking
 - [ ] Phase 5: Deep learning
 - [ ] Phase 6: Experimentation and model selection
 
