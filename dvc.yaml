@@ -43,3 +43,60 @@ stages:
     outs:
       - ${data.validated_path}
       - ${data.quality_report_path}
+
+  split:
+    desc: Create reproducible stratified development and test datasets.
+
+    cmd: python -m retention.data.splitting
+
+    deps:
+      - ${data.validated_path}
+      - src/retention/data/splitting.py
+      - src/retention/data/quality.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - project.random_state
+      - data.validated_path
+      - data.development_path
+      - data.test_path
+      - data.split_report_path
+      - data.target_column
+      - data.id_column
+      - data.test_size
+
+    outs:
+      - ${data.development_path}
+      - ${data.test_path}
+      - ${data.split_report_path}
+
+  eda:
+    desc: Generate leakage-safe automated EDA from the development split.
+
+    cmd: python -m retention.analysis.eda
+
+    deps:
+      - ${data.development_path}
+      - src/retention/analysis/__init__.py
+      - src/retention/analysis/descriptive.py
+      - src/retention/analysis/association.py
+      - src/retention/analysis/segmentation.py
+      - src/retention/analysis/outliers.py
+      - src/retention/analysis/visualization.py
+      - src/retention/analysis/reporting.py
+      - src/retention/analysis/eda.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - project.random_state
+      - data.development_path
+      - data.target_column
+      - data.id_column
+      - eda
+
+    outs:
+      - ${eda.report_directory}

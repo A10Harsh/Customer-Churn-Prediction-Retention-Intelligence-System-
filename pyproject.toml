@@ -6,9 +6,8 @@ build-backend = "setuptools.build_meta"
 name = "customer-retention-intelligence"
 version = "0.1.0"
 description = "An end-to-end customer retention intelligence system."
-readme = "README.md"
+readme = "readme.md"
 requires-python = ">=3.11,<3.12"
-
 dependencies = [
     "numpy>=1.26,<3",
     "pandas>=2.2,<3",
@@ -16,9 +15,11 @@ dependencies = [
     "python-dotenv>=1,<2",
     "pandera[pandas]>=0.24,<1",
     "pyarrow>=18,<30",
+    "scikit-learn>=1.5,<2",
+    "scipy>=1.13,<2",
 ]
-
 [project.optional-dependencies]
+
 dev = [
     "dvc>=3,<4",
     "pytest>=8,<10",
@@ -26,6 +27,12 @@ dev = [
     "ruff>=0.9,<1",
 ]
 
+analysis = [
+    "matplotlib>=3.8,<4",
+    "seaborn>=0.13,<1",
+    "jupyterlab>=4,<5",
+    "ipykernel>=6,<8",
+]
 [tool.setuptools.packages.find]
 where = ["src"]
 
@@ -36,6 +43,7 @@ addopts = "-v"
 [tool.ruff]
 target-version = "py311"
 line-length = 88
+extend-exclude = ["notebooks/*.ipynb"]
 
 [tool.ruff.lint]
 select = [
