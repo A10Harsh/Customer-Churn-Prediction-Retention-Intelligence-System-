@@ -3,8 +3,8 @@
 An end-to-end, production-oriented customer retention intelligence system. The
 implemented foundation currently provides validated data ingestion, reproducible
 development/hold-out splitting, exploratory notebooks, automated development-data
-EDA, and reproducible statistical reporting. Modeling and recommendation
-capabilities remain planned.
+EDA, reproducible statistical reporting, and reusable feature preprocessing.
+Modeling and recommendation capabilities remain planned.
 
 ## Business Objective
 
@@ -27,6 +27,9 @@ IBM Telco Customer Churn dataset.
   multicollinearity reports
 - Atomic report publication and explicit held-out-data access protection
 - Automated tests for pipeline correctness, failure handling, and reproducibility
+- Six deterministic candidate features and cloneable baseline/engineered
+  preprocessing pipelines for linear, neural, and tree model families
+- Explicit feature subsets and leakage-safe target separation (`No=0`, `Yes=1`)
 
 ## Planned Capabilities
 
@@ -99,6 +102,9 @@ dependencies, leakage controls, and limitations. Statistical artifacts are writt
 to `reports/generated/statistical_analysis/` as strict JSON, five focused CSV
 tables, and a standalone HTML report.
 
+For feature definitions, the six preprocessing configurations, and future
+cross-validation usage, see [feature preprocessing](docs/preprocessing.md).
+
 ## Development Checks
 
 ```bash
@@ -121,8 +127,11 @@ rewriting completed artifacts.
 - EDA associations are descriptive and do not perform feature selection.
 - Statistical tests are EDA-informed exploratory evidence, not independent
   confirmation or causal effects.
-- No learned preprocessing, class balancing, or supervised model training has
-  been implemented.
+- Feature engineering is customer-local. Imputation, scaling, and categorical
+  mappings are learned only when a preprocessing pipeline is fitted; future
+  model evaluation must fit it inside each training fold.
+- No globally preprocessed dataset, class balancing, or supervised model
+  training has been implemented.
 
 ## Project Status
 
@@ -130,7 +139,7 @@ rewriting completed artifacts.
 - [x] Phase 2: Data ingestion and validation
 - [x] Phase 3A: Development-data EDA and automated reporting
 - [x] Phase 3B: Statistical hypothesis testing and automated reporting
-- [ ] Phase 3C: Feature engineering
+- [x] Phase 3C: Feature engineering and preprocessing readiness
 - [ ] Phase 4: Machine learning
 - [ ] Phase 5: Deep learning
 - [ ] Phase 6: Experimentation and model selection
