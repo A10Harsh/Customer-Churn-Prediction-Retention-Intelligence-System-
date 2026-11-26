@@ -72,3 +72,29 @@ eda:
     dpi: 110
     width: 8.0
     height: 5.0
+
+statistical_analysis:
+  significance_level: 0.05
+  fdr_threshold: 0.05
+  confidence_level: 0.95
+  registered_predictors:
+    numerical:
+      HYP-01: tenure
+      HYP-02: MonthlyCharges
+      HYP-03: TotalCharges
+    categorical:
+      HYP-04: Contract
+      HYP-05: InternetService
+      HYP-06: PaymentMethod
+      HYP-07: TechSupport
+      HYP-08: OnlineSecurity
+      HYP-09: PaperlessBilling
+      HYP-10a: gender
+      HYP-10b: SeniorCitizen
+      HYP-10c: Partner
+      HYP-10d: Dependents
+    confidence_segments:
+      - Contract
+  minimum_segment_size: 30
+  vif_screening_thresholds: [5.0, 10.0]
+  output_directory: reports/generated/statistical_analysis

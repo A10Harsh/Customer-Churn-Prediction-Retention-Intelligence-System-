@@ -42,14 +42,19 @@ def write_summary(summary: dict[str, Any], path: Path) -> None:
     )
 
 
-def write_tables(tables: dict[str, pd.DataFrame], directory: Path) -> list[str]:
+def write_tables(
+    tables: dict[str, pd.DataFrame], directory: Path, *, index: bool = True
+) -> list[str]:
     """Write stable CSV representations of analytical tables."""
     directory.mkdir(parents=True, exist_ok=True)
     names = []
     for name, table in sorted(tables.items()):
         filename = f"{name}.csv"
         table.to_csv(
-            directory / filename, index=True, lineterminator="\n", float_format="%.12g"
+            directory / filename,
+            index=index,
+            lineterminator="\n",
+            float_format="%.12g",
         )
         names.append(filename)
     return names
@@ -91,4 +96,62 @@ Tenure–TotalCharges Pearson correlation: {tenure_pearson:.4f}.</p>
 <h2>Machine-readable tables</h2><ul>{table_links}</ul>
 <p><a href="summary.json">summary.json</a></p>
 <h2>Limitations</h2><ul>{limitations}</ul></body></html>"""
+    path.write_text(html, encoding="utf-8")
+
+
+def write_statistical_html(
+    summary: dict[str, Any], tables: list[str], path: Path
+) -> None:
+    """Write the standalone statistical-analysis report without volatile metadata."""
+    findings = summary["key_findings"]
+    families = summary["hypothesis_families"]
+    family_rows = "".join(
+        "<tr>"
+        f"<td>{escape(str(name))}</td>"
+        f"<td>{int(values['test_count'])}</td>"
+        f"<td>{int(values['bh_rejections'])}</td>"
+        f"<td>{int(values['holm_rejections'])}</td>"
+        "</tr>"
+        for name, values in families.items()
+    )
+    table_links = "".join(
+        f'<li><a href="{escape(name)}">{escape(name)}</a></li>' for name in tables
+    )
+    recommendations = "".join(
+        f"<li>{escape(item)}</li>" for item in summary["recommendations"]
+    )
+    limitations = "".join(f"<li>{escape(item)}</li>" for item in summary["limitations"])
+    html = f"""<!doctype html>
+<html><head><meta charset="utf-8"><title>Automated statistical analysis</title>
+<style>
+body{{font:16px system-ui;max-width:1050px;margin:auto;padding:2rem;color:#222}}
+table{{border-collapse:collapse}}
+th,td{{border:1px solid #ccc;padding:.5rem;text-align:left}}
+code{{background:#f4f4f4;padding:.1rem .25rem}}
+</style></head><body>
+<h1>Customer Retention Intelligence — Statistical Analysis</h1>
+<p>Development population only. Results are exploratory associations, not causal or
+independently confirmatory evidence.</p>
+<h2>Statistical evidence and uncertainty</h2>
+<p>Overall churn rate: {findings["overall_churn_rate"]:.4f}
+({summary["confidence_level"]:.0%} Wilson interval
+{findings["overall_churn_ci_lower"]:.4f}–{findings["overall_churn_ci_upper"]:.4f}).
+Primary feature–churn decisions changed after BH: {findings["primary_bh_changes"]}.</p>
+<table><thead><tr><th>Hypothesis family</th><th>Tests</th><th>BH rejections</th>
+<th>Holm rejections</th></tr></thead><tbody>{family_rows}</tbody></table>
+<h2>Effect sizes</h2>
+<p>Tenure Cohen's d (churned minus retained): {findings["tenure_cohens_d"]:.4f}.
+Contract–churn corrected Cramér's V: {findings["contract_cramers_v"]:.4f}.</p>
+<h2>Predictor dependencies</h2>
+<p>Numerical TotalCharges VIF: {findings["total_charges_vif"]:.4f}.
+The temporary mixed design has rank {findings["mixed_design_rank"]} of
+{findings["mixed_design_columns_with_intercept"]} columns including the intercept,
+with {findings["mixed_design_infinite_vif_columns"]} columns participating in exact
+dependencies. Its standardized condition number is explicitly
+{escape(str(findings["mixed_design_condition_number_display"]))}.</p>
+<h2>Modelling recommendations</h2><ul>{recommendations}</ul>
+<h2>Machine-readable artifacts</h2><ul>{table_links}</ul>
+<p><a href="summary.json">summary.json</a></p>
+<h2>Limitations</h2><ul>{limitations}</ul>
+</body></html>"""
     path.write_text(html, encoding="utf-8")
