@@ -71,3 +71,32 @@ stages:
       - ${data.development_path}
       - ${data.test_path}
       - ${data.split_report_path}
+
+  eda:
+    desc: Generate leakage-safe automated EDA from the development split.
+
+    cmd: python -m retention.analysis.eda
+
+    deps:
+      - ${data.development_path}
+      - src/retention/analysis/__init__.py
+      - src/retention/analysis/descriptive.py
+      - src/retention/analysis/association.py
+      - src/retention/analysis/segmentation.py
+      - src/retention/analysis/outliers.py
+      - src/retention/analysis/visualization.py
+      - src/retention/analysis/reporting.py
+      - src/retention/analysis/eda.py
+      - src/retention/utils/config.py
+      - src/retention/utils/logger.py
+      - requirements-lock.txt
+
+    params:
+      - project.random_state
+      - data.development_path
+      - data.target_column
+      - data.id_column
+      - eda
+
+    outs:
+      - ${eda.report_directory}

@@ -130,3 +130,115 @@ stages:
       hash: md5
       md5: f05ae6f4e9160589d859861420023809
       size: 1252
+  eda:
+    cmd: python -m retention.analysis.eda
+    deps:
+    - path: data/processed/development.parquet
+      hash: md5
+      md5: 14512c79f531d1d0ec5a053c30fef483
+      size: 160039
+    - path: requirements-lock.txt
+      hash: md5
+      md5: a9f19682eed3a9de20d94c4bf5f81aa8
+      size: 5833
+    - path: src/retention/analysis/__init__.py
+      hash: md5
+      md5: 626b05184d9dc98a419fa4c238ecd61d
+      size: 77
+    - path: src/retention/analysis/association.py
+      hash: md5
+      md5: b68b254a6cedff16b781f6c19adf8a9e
+      size: 6695
+    - path: src/retention/analysis/descriptive.py
+      hash: md5
+      md5: ca514b31838b18daa543787740dd4a6d
+      size: 4982
+    - path: src/retention/analysis/eda.py
+      hash: md5
+      md5: cb8f0fe36f26d2c5d088a8c4adf2988c
+      size: 10401
+    - path: src/retention/analysis/outliers.py
+      hash: md5
+      md5: e29a1e52eb3b7cf27c4549371fbe3f07
+      size: 6657
+    - path: src/retention/analysis/reporting.py
+      hash: md5
+      md5: 3bb9ebaa4c47a29ab3c332224aca9ea5
+      size: 3527
+    - path: src/retention/analysis/segmentation.py
+      hash: md5
+      md5: 27ceea377f91f20d5a59e455f1262ef3
+      size: 6211
+    - path: src/retention/analysis/visualization.py
+      hash: md5
+      md5: 3a39d0b1134e892cccb0a078a5a36515
+      size: 5455
+    - path: src/retention/utils/config.py
+      hash: md5
+      md5: 2658fdfd60190e4d944e3665bee1671c
+      size: 580
+    - path: src/retention/utils/logger.py
+      hash: md5
+      md5: e0bbecf3e627fbfba26277276d2f8c44
+      size: 1072
+    params:
+      params.yaml:
+        data.development_path: data/processed/development.parquet
+        data.id_column: customerID
+        data.target_column: Churn
+        eda:
+          report_directory: reports/generated/eda
+          numerical_features:
+          - tenure
+          - MonthlyCharges
+          - TotalCharges
+          categorical_features:
+          - gender
+          - SeniorCitizen
+          - Partner
+          - Dependents
+          - PhoneService
+          - MultipleLines
+          - InternetService
+          - OnlineSecurity
+          - OnlineBackup
+          - DeviceProtection
+          - TechSupport
+          - StreamingTV
+          - StreamingMovies
+          - Contract
+          - PaperlessBilling
+          - PaymentMethod
+          rare_category_threshold: 0.01
+          near_constant_dominance_threshold: 0.95
+          iqr_multiplier: 1.5
+          z_score_threshold: 3.0
+          modified_z_score_threshold: 3.5
+          percentile_bounds:
+          - 0.01
+          - 0.99
+          strong_association_thresholds:
+            numerical: 0.8
+            categorical: 0.4
+            target: 0.2
+          minimum_segment_sample_size: 30
+          tenure_boundaries:
+          - -0.001
+          - 6
+          - 12
+          - 24
+          - 48
+          - 72
+          mutual_information:
+            n_neighbors: 3
+          figures:
+            dpi: 110
+            width: 8.0
+            height: 5.0
+        project.random_state: 42
+    outs:
+    - path: reports/generated/eda
+      hash: md5
+      md5: e6bcf030b5bcbe6da009c1c74e8d455d.dir
+      size: 592520
+      nfiles: 35

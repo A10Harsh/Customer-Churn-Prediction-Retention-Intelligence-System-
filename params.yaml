@@ -30,3 +30,45 @@ artifacts:
 
 reports:
   directory: reports
+
+eda:
+  report_directory: reports/generated/eda
+  numerical_features:
+    - tenure
+    - MonthlyCharges
+    - TotalCharges
+  categorical_features:
+    - gender
+    - SeniorCitizen
+    - Partner
+    - Dependents
+    - PhoneService
+    - MultipleLines
+    - InternetService
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - Contract
+    - PaperlessBilling
+    - PaymentMethod
+  rare_category_threshold: 0.01
+  near_constant_dominance_threshold: 0.95
+  iqr_multiplier: 1.5
+  z_score_threshold: 3.0
+  modified_z_score_threshold: 3.5
+  percentile_bounds: [0.01, 0.99]
+  strong_association_thresholds:
+    numerical: 0.80
+    categorical: 0.40
+    target: 0.20
+  minimum_segment_sample_size: 30
+  tenure_boundaries: [-0.001, 6, 12, 24, 48, 72]
+  mutual_information:
+    n_neighbors: 3
+  figures:
+    dpi: 110
+    width: 8.0
+    height: 5.0
