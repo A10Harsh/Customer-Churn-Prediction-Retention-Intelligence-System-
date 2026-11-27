@@ -9,8 +9,8 @@ stages:
       size: 977501
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/ingestion.py
       hash: md5
       md5: 88019786337e139f3266fee4cf0a1938
@@ -43,8 +43,8 @@ stages:
       size: 201419
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/quality.py
       hash: md5
       md5: b54486b1d1f4a5ae72c5361b4b48aff2
@@ -89,8 +89,8 @@ stages:
       size: 195335
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/quality.py
       hash: md5
       md5: b54486b1d1f4a5ae72c5361b4b48aff2
@@ -139,8 +139,8 @@ stages:
       size: 160039
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/analysis/__init__.py
       hash: md5
       md5: 626b05184d9dc98a419fa4c238ecd61d
@@ -251,8 +251,8 @@ stages:
       size: 160039
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/analysis/__init__.py
       hash: md5
       md5: 626b05184d9dc98a419fa4c238ecd61d
@@ -345,3 +345,108 @@ stages:
       md5: 6881fa1216e788dd220590c34cf2fc8c.dir
       size: 18066
       nfiles: 7
+  final_train:
+    cmd: python -m retention.models.final_training
+    deps:
+    - path: configs/selected_model.yaml
+      hash: md5
+      md5: 4fdd06dba4a9aa0d20ab0221295f50ad
+      size: 1619
+    - path: data/processed/development.parquet
+      hash: md5
+      md5: 14512c79f531d1d0ec5a053c30fef483
+      size: 160039
+    - path: params.yaml
+      hash: md5
+      md5: 6d64df103a8d0b8e3a201505b6e17a15
+      size: 3862
+    - path: reports/generated/xgboost_enhancement/extended_trial_35_oof.csv
+      hash: md5
+      md5: 8ce8c0b11c111ad8c7a8a111c51f5a7f
+      size: 131875
+    - path: reports/generated/xgboost_enhancement/revised_selection.json
+      hash: md5
+      md5: 404a0dc85f4136a978d81b14f1072810
+      size: 2639
+    - path: requirements-lock.txt
+      hash: md5
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
+    - path: src/retention/evaluation/calibration.py
+      hash: md5
+      md5: fd8aa67f83291572a8c1e6ae706b9953
+      size: 2705
+    - path: src/retention/evaluation/metrics.py
+      hash: md5
+      md5: 38f0b60ca9a3c549ef56b07c36e9a443
+      size: 2455
+    - path: src/retention/features/preprocessing.py
+      hash: md5
+      md5: ee20f50c21dc9b2e9e0ccd976dfb97f2
+      size: 6233
+    - path: src/retention/models/factory.py
+      hash: md5
+      md5: 126b31c468ea517dd671635adedeb2ae
+      size: 2529
+    - path: src/retention/models/final_training.py
+      hash: md5
+      md5: a93d9beaf3080e2be7f98f82336851ed
+      size: 6599
+    - path: src/retention/models/optimization.py
+      hash: md5
+      md5: 39a40beb110c3cc11f44a79dbf4240bc
+      size: 25318
+    - path: src/retention/models/predictor.py
+      hash: md5
+      md5: 2d9dd0b181332a080d4239811e065ecd
+      size: 3014
+    - path: src/retention/models/training.py
+      hash: md5
+      md5: f4ec2bb432596248ee30aefc7426b70a
+      size: 14130
+    outs:
+    - path: artifacts/final_model/predictor.joblib
+      hash: md5
+      md5: edbf32879aa0809f29d4e251045677fa
+      size: 420896
+    - path: artifacts/final_model/readiness.json
+      hash: md5
+      md5: d8294b8ff3ef9f0b4916413b75a9370e
+      size: 995
+  final_evaluate:
+    cmd: python -m retention.evaluation.final_evaluation
+    deps:
+    - path: artifacts/final_model/predictor.joblib
+      hash: md5
+      md5: edbf32879aa0809f29d4e251045677fa
+      size: 420896
+    - path: artifacts/final_model/readiness.json
+      hash: md5
+      md5: d8294b8ff3ef9f0b4916413b75a9370e
+      size: 995
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: a6bd36f2b2c0838f62cb83cecf198d0e
+      size: 51460
+    - path: params.yaml
+      hash: md5
+      md5: 6d64df103a8d0b8e3a201505b6e17a15
+      size: 3862
+    - path: requirements-lock.txt
+      hash: md5
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
+    - path: src/retention/evaluation/final_evaluation.py
+      hash: md5
+      md5: 31dbb3458ec8c38fe426365798e7997d
+      size: 8487
+    - path: src/retention/models/predictor.py
+      hash: md5
+      md5: 2d9dd0b181332a080d4239811e065ecd
+      size: 3014
+    outs:
+    - path: reports/generated/final_evaluation
+      hash: md5
+      md5: 20889ba2975ce99d7308de13462b3167.dir
+      size: 96549
+      nfiles: 6
