@@ -129,3 +129,39 @@ stages:
 
     outs:
       - ${statistical_analysis.output_directory}
+
+  final_train:
+    desc: Fit frozen development-only XGBoost and verify inference readiness.
+    cmd: python -m retention.models.final_training
+    deps:
+      - ${data.development_path}
+      - configs/selected_model.yaml
+      - reports/generated/xgboost_enhancement/extended_trial_35_oof.csv
+      - reports/generated/xgboost_enhancement/revised_selection.json
+      - src/retention/models/final_training.py
+      - src/retention/models/predictor.py
+      - src/retention/models/factory.py
+      - src/retention/models/optimization.py
+      - src/retention/models/training.py
+      - src/retention/features/preprocessing.py
+      - src/retention/evaluation/calibration.py
+      - src/retention/evaluation/metrics.py
+      - params.yaml
+      - requirements-lock.txt
+    outs:
+      - artifacts/final_model/predictor.joblib
+      - artifacts/final_model/readiness.json
+
+  final_evaluate:
+    desc: Evaluate only the frozen ready artifact on held-out customers.
+    cmd: python -m retention.evaluation.final_evaluation
+    deps:
+      - artifacts/final_model/predictor.joblib
+      - artifacts/final_model/readiness.json
+      - ${data.test_path}
+      - src/retention/evaluation/final_evaluation.py
+      - src/retention/models/predictor.py
+      - params.yaml
+      - requirements-lock.txt
+    outs:
+      - reports/generated/final_evaluation
