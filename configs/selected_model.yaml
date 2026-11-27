@@ -1,0 +1,52 @@
+# Frozen development-only selection; no final estimator has been fitted.
+schema_version: 1
+model_family: xgboost
+model_identifier: xgboost_enhanced
+feature_mode: baseline
+preprocessing:
+  factory: retention.features.preprocessing.make_preprocessor
+  feature_set: baseline
+  model_family: tree
+  selected_features: null
+target:
+  column: Churn
+  positive_label: 'Yes'
+  positive_class: 1
+class_weighting:
+  strategy: custom_scale_pos_weight
+  scale_pos_weight: 2.9905367650016705
+hyperparameters:
+  n_estimators: 535
+  max_depth: 1
+  learning_rate: 0.03579038053948308
+  min_child_weight: 10
+  subsample: 0.7052166313475686
+  colsample_bytree: 0.9594946663504169
+  reg_lambda: 20.77581123448816
+  gamma: 2.8865538453940296
+  n_jobs: 1
+  tree_method: hist
+  reg_alpha: 0.1899989228943147
+calibration:
+  method: sigmoid
+  input_score: XGBClassifier.predict_proba[:, positive_class]
+  fitting: five inner OOF folds within each outer training fold
+classification:
+  score: calibrated positive-class probability
+  threshold: 0.3304499866713542
+  minimum_precision: 0.55
+development_integrity:
+  sha256: 28d12b92122ab94a8172be83e2bcf7e93b128a1bf3633c2b48075c426864da13
+  fold_sha256: 84805272cdf36d38d59c9d41e90efe54f1b08ccd0db6fb4deefbabf4f77b05c7
+  seed: 42
+  folds: 5
+source_mlflow_runs:
+  phase_6a_plus_selection: f54ce6333c8c4d80a0db24d24967dc71
+  phase_6a_plus_plus_diagnostics: 912eafa145e747319c15e0ad1c488ac1
+selection_performance:
+  mean_cv_ap: 0.666371396185263
+  pooled_ap: 0.6630123846303676
+  pooled_roc_auc: 0.84927716694369
+  precision: 0.5506112469437653
+  recall: 0.7531772575250836
+  f1: 0.6361581920903955

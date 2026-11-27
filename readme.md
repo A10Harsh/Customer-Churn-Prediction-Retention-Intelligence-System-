@@ -5,7 +5,8 @@ implemented foundation currently provides validated data ingestion, reproducible
 development/hold-out splitting, exploratory notebooks, automated development-data
 EDA, reproducible statistical reporting, and reusable feature preprocessing.
 Classical and PyTorch ANN experiments with local MLflow tracking are
-implemented; optimization and recommendation capabilities remain planned.
+implemented. Development-only optimization, provisional calibration, and
+threshold selection are available; recommendation capabilities remain planned.
 
 ## Business Objective
 
@@ -36,6 +37,12 @@ IBM Telco Customer Churn dataset.
   out-of-fold evaluation, and local MLflow tracking
 - Nested-fold PyTorch ANN experiments with inner-validation early stopping,
   weighted-loss comparisons, out-of-fold evaluation, and MLflow tracking
+- Development-only Optuna optimization, provisional model selection, sigmoid
+  calibration comparison, and F1 threshold analysis
+- Targeted XGBoost enhancement with fold-local feature and imbalance screens,
+  extended search, and a precision-constrained recall operating point
+- Development-only error, calibration, segment, learning-curve, and model-capacity
+  diagnostics; frozen selection in `configs/selected_model.yaml`
 
 ## Planned Capabilities
 
@@ -45,7 +52,6 @@ IBM Telco Customer Churn dataset.
 - Customer-level SHAP explanations
 - LLM-powered Next-Best-Action recommendations
 - Model versioning and registry
-- Hyperparameter optimization, threshold selection, and probability calibration
 - REST API and interactive analytics dashboard
 - Data drift and model performance monitoring
 - Automated testing and CI/CD
@@ -53,7 +59,8 @@ IBM Telco Customer Churn dataset.
 ## Current Technology Stack
 
 Python 3.11, pandas, NumPy, SciPy, scikit-learn, Pandera, PyArrow,
-Matplotlib, seaborn, XGBoost, PyTorch, MLflow, DVC, Pytest, and Ruff.
+Matplotlib, seaborn, XGBoost, PyTorch, Optuna, imbalanced-learn, MLflow,
+DVC, Pytest, and Ruff.
 
 ## Local Setup
 
@@ -115,23 +122,50 @@ For classical model architecture, commands, metrics, and initial development
 results, see [model training](docs/model_training.md).
 For ANN architecture, nested CV, and measured comparisons, see
 [ANN training](docs/ann_training.md).
+For reproducible Optuna search, provisional model selection, calibration, and
+threshold analysis, see [model optimization](docs/model_optimization.md).
+For the targeted XGBoost enhancement and revised provisional selection, see
+[XGBoost enhancement](docs/xgboost_enhancement.md).
+The current development-only choice is baseline-feature, sigmoid-calibrated
+XGBoost with 535 depth-one trees and a full-precision threshold of
+`0.3304499866713542`. Phase 6A++ diagnostics retained this choice. The frozen
+configuration records all hyperparameters, hashes, score conventions, and
+source MLflow runs. Generated diagnostics are in
+`reports/generated/model_diagnostics/` when the development artifacts are present.
+The held-out split has not been evaluated.
+Depth 2–5 raised training AP but reduced validation AP; additional trees
+plateaued. Exact predictor profiles with conflicting labels and probability
+overlap limit discrimination with the recorded features. Mean fold AP is
+0.66637, while pooled OOF AP is 0.66301. Repeated development-fold selection
+can make apparent improvements and the chosen operating point optimistic.
 
-Run all 13 classical experiments and launch the local run browser with:
+Historical experiment entry points and the local run browser are:
 
 ```bash
 python -m retention.models.training --config params.yaml
 python -m retention.models.ann_training --config params.yaml
+python -m retention.models.optimization --config params.yaml
+python -m retention.models.xgboost_enhancement --config params.yaml
 mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
 ```
 
 ## Development Checks
 
 ```bash
-python -m pytest -v
-python -m pytest --cov=retention --cov-report=term-missing
+scripts/test_suite.sh -q
+.venv/bin/coverage report -m
 ruff check .
 ruff format --check .
+python -m pip check
+git diff --check
 ```
+
+`scripts/test_suite.sh` runs the complete suite once with statement and branch
+coverage. It sets OpenMP, BLAS, and related native thread pools to one thread
+for the test process. An unconstrained run exceeded an 80-second bound;
+faulthandler found it spending time in XGBoost training and then PyTorch loss
+evaluation. With controlled threads, the same tests completed in one run.
+This setting applies to tests only and does not change model training code.
 
 Executed notebooks are preserved research artifacts and are excluded from Ruff's
 automatic lint/format scope. Production Python modules and tests remain fully
@@ -161,7 +195,10 @@ rewriting completed artifacts.
 - [x] Phase 3D: Class imbalance comparison
 - [x] Phase 4: Initial classical machine learning and MLflow tracking
 - [x] Phase 5: Initial PyTorch ANN and MLflow experiments
-- [ ] Phase 6: Experimentation and model selection
+- [x] Phase 6A: Development-only optimization and provisional selection
+- [x] Phase 6A+: Targeted XGBoost enhancement and revised selection
+- [x] Phase 6A++: Development-only diagnostics and retained selection
+- [ ] Phase 6B: Final training integration and held-out evaluation
 
 ## Disclaimer
 
