@@ -127,3 +127,23 @@ ann_training:
   loss_strategies: [unweighted, weighted]
   report_directory: reports/generated/ann_training
   mlflow_experiment: customer-retention-ann
+
+model_optimization:
+  search_space_version: 1
+  trial_budgets:
+    logistic_regression: 20
+    random_forest: 20
+    xgboost: 20
+    ann: 10
+  storage_path: artifacts/model_optimization/optuna.db
+  report_directory: reports/generated/model_optimization
+  mlflow_experiment: customer-retention-optimization
+
+xgboost_enhancement:
+  search_space_version: 2
+  trials: 50
+  minimum_precision: 0.55
+  meaningful_ap_gain: 0.003
+  storage_path: artifacts/xgboost_enhancement/optuna_v2.db
+  report_directory: reports/generated/xgboost_enhancement
+  mlflow_experiment: customer-retention-xgboost-enhancement
