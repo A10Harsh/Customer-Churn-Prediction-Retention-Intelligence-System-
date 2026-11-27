@@ -38,6 +38,7 @@ training = [
     "xgboost>=3.2,<4",
     "mlflow>=3.18,<4",
     "matplotlib>=3.8,<4",
+    "torch>=2.15,<3",
 ]
 [tool.setuptools.packages.find]
 where = ["src"]

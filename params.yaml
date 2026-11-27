@@ -111,3 +111,19 @@ model_training:
   mlflow_tracking_uri: sqlite:///mlflow.db
   mlflow_experiment: customer-retention-classical-ml
   report_directory: reports/generated/model_training
+
+ann_training:
+  hidden_dims: [64, 32, 16]
+  dropout: 0.2
+  optimizer: AdamW
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  batch_size: 64
+  max_epochs: 100
+  early_stopping_patience: 10
+  inner_validation_size: 0.2
+  device: cpu
+  feature_modes: [baseline, engineered]
+  loss_strategies: [unweighted, weighted]
+  report_directory: reports/generated/ann_training
+  mlflow_experiment: customer-retention-ann
