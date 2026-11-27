@@ -198,7 +198,8 @@ rewriting completed artifacts.
 - [x] Phase 6A: Development-only optimization and provisional selection
 - [x] Phase 6A+: Targeted XGBoost enhancement and revised selection
 - [x] Phase 6A++: Development-only diagnostics and retained selection
-- [ ] Phase 6B: Final training integration and held-out evaluation
+- [x] Phase 6B: Final training integration and held-out evaluation
+- [x] Phase 7: PostgreSQL persistence and local integration verification
 
 ## Disclaimer
 
@@ -206,3 +207,18 @@ This project is an educational implementation using historical customer data.
 Observed churn associations and monthly-charge exposure are descriptive. They do
 not establish causal effects, realized revenue loss, customer lifetime value, or
 retention-treatment effectiveness.
+
+## Final model candidate
+
+Phase 6B's frozen XGBoost candidate, independent held-out metrics,
+reproducibility commands and limitations are documented in
+[docs/final_model.md](docs/final_model.md). The [model card](docs/final_model_card.md)
+summarizes intended use and monitoring. The candidate is registered under
+the MLflow `candidate` alias; it has not been promoted to production.
+
+## PostgreSQL persistence
+
+Phase 7 database architecture, local PostgreSQL initialization, migrations,
+synthetic persistence checks, and isolated test setup are documented in
+[docs/database.md](docs/database.md). Database integration requires a local
+PostgreSQL server and uses environment-provided credentials.
