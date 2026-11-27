@@ -127,7 +127,9 @@ class TelcoFeatureEngineer(TransformerMixin, BaseEstimator):
                 else f"{column}_adopted"
             )
             result[name] = adopted[column]
-        return result.loc[:, self.feature_names_out_]
+        return result.loc[
+            :, getattr(self, "base_feature_names_out_", self.feature_names_out_)
+        ]
 
     def get_feature_names_out(self, input_features: object = None) -> np.ndarray:
         """Return output column names in transformation order."""
@@ -163,3 +165,51 @@ class TelcoFeatureEngineer(TransformerMixin, BaseEstimator):
                 raise ValueError(f"{column} must be non-negative numeric or missing.")
             if not np.isfinite(values.dropna()).all():
                 raise ValueError(f"{column} must contain finite numeric values.")
+
+
+class EnhancedTelcoFeatureEngineer(TelcoFeatureEngineer):
+    """Add fold-fitted interaction features to the existing engineered view."""
+
+    def fit(self, X: pd.DataFrame, y: object = None) -> "EnhancedTelcoFeatureEngineer":
+        super().fit(X, y)
+        self.base_feature_names_out_ = self.feature_names_out_.copy()
+        charges = pd.to_numeric(X["MonthlyCharges"], errors="coerce")
+        if charges.isna().any() or not np.isfinite(charges).all():
+            raise ValueError("MonthlyCharges must be finite for enhanced features.")
+        self.charge_edges_ = np.unique(charges.quantile([0.25, 0.5, 0.75]))
+        self.feature_names_out_ = np.asarray(
+            [
+                *self.feature_names_out_,
+                "contract_tenure",
+                "payment_tenure",
+                "internet_charge_band",
+                "support_security_status",
+                "monthly_charge_per_service",
+                "new_customer",
+            ],
+            dtype=object,
+        )
+        return self
+
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        # The parent validates every raw service, contract and payment category.
+        result = super().transform(X)
+        tenure_group = result["tenure_group"].astype(str)
+        result["contract_tenure"] = X["Contract"].astype(str) + "|" + tenure_group
+        result["payment_tenure"] = X["PaymentMethod"].astype(str) + "|" + tenure_group
+        bands = np.searchsorted(self.charge_edges_, X["MonthlyCharges"], side="right")
+        result["internet_charge_band"] = (
+            X["InternetService"].astype(str)
+            + "|"
+            + pd.Series(bands, index=X.index).astype(str)
+        )
+        result["support_security_status"] = np.where(
+            X["InternetService"].eq("No"),
+            "unavailable",
+            result["support_security_count"].astype(str),
+        )
+        result["monthly_charge_per_service"] = X["MonthlyCharges"].div(
+            result["total_services"].where(result["total_services"].gt(0))
+        )
+        result["new_customer"] = X["tenure"].le(6).astype("int8")
+        return result.loc[:, self.feature_names_out_]

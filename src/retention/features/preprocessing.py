@@ -20,7 +20,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from retention.data.schemas import INTERNET_DEPENDENT_COLUMNS
-from retention.features.engineering import TelcoFeatureEngineer
+from retention.features.engineering import (
+    EnhancedTelcoFeatureEngineer,
+    TelcoFeatureEngineer,
+)
 from retention.utils.config import load_config
 
 _REPLACED_SERVICES = ["MultipleLines", *INTERNET_DEPENDENT_COLUMNS]
@@ -67,8 +70,8 @@ def make_preprocessor(
     tree. selected_features explicitly limits encoded input columns; omission
     keeps every predictor. A subset must be chosen inside model evaluation CV.
     """
-    if feature_set not in {"baseline", "engineered"}:
-        raise ValueError("feature_set must be baseline or engineered.")
+    if feature_set not in {"baseline", "engineered", "enhanced"}:
+        raise ValueError("feature_set must be baseline, engineered, or enhanced.")
     if model_family not in {"linear", "neural", "tree"}:
         raise ValueError("model_family must be linear, neural, or tree.")
 
@@ -77,11 +80,20 @@ def make_preprocessor(
     categorical = list(config["eda"]["categorical_features"])
     binary = ["SeniorCitizen"]
     categorical.remove("SeniorCitizen")
-    if feature_set == "engineered":
+    if feature_set in {"engineered", "enhanced"}:
         numerical += _ENGINEERED_NUMERIC
         categorical = [c for c in categorical if c not in _REPLACED_SERVICES]
         categorical += ["tenure_group"]
         binary += _ENGINEERED_BINARY
+    if feature_set == "enhanced":
+        numerical += ["monthly_charge_per_service"]
+        categorical += [
+            "contract_tenure",
+            "payment_tenure",
+            "internet_charge_band",
+            "support_security_status",
+        ]
+        binary += ["new_customer"]
 
     available = numerical + binary + categorical
     if len(available) != len(set(available)):
@@ -141,7 +153,12 @@ def make_preprocessor(
         verbose_feature_names_out=True,
     )
     steps = []
-    if feature_set == "engineered":
-        steps.append(("engineering", TelcoFeatureEngineer(config_path=config_path)))
+    if feature_set in {"engineered", "enhanced"}:
+        engineer = (
+            EnhancedTelcoFeatureEngineer
+            if feature_set == "enhanced"
+            else TelcoFeatureEngineer
+        )
+        steps.append(("engineering", engineer(config_path=config_path)))
     steps.append(("columns", columns))
     return Pipeline(steps)
