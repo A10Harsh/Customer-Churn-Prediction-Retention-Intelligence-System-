@@ -9,8 +9,8 @@ stages:
       size: 977501
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/ingestion.py
       hash: md5
       md5: 88019786337e139f3266fee4cf0a1938
@@ -43,8 +43,8 @@ stages:
       size: 201419
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/quality.py
       hash: md5
       md5: b54486b1d1f4a5ae72c5361b4b48aff2
@@ -89,8 +89,8 @@ stages:
       size: 195335
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/data/quality.py
       hash: md5
       md5: b54486b1d1f4a5ae72c5361b4b48aff2
@@ -139,8 +139,8 @@ stages:
       size: 160039
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/analysis/__init__.py
       hash: md5
       md5: 626b05184d9dc98a419fa4c238ecd61d
@@ -251,8 +251,8 @@ stages:
       size: 160039
     - path: requirements-lock.txt
       hash: md5
-      md5: a9f19682eed3a9de20d94c4bf5f81aa8
-      size: 5833
+      md5: 905d7ed2a4be7f60946ec1185205bb30
+      size: 5880
     - path: src/retention/analysis/__init__.py
       hash: md5
       md5: 626b05184d9dc98a419fa4c238ecd61d
