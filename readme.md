@@ -4,8 +4,8 @@ An end-to-end, production-oriented customer retention intelligence system. The
 implemented foundation currently provides validated data ingestion, reproducible
 development/hold-out splitting, exploratory notebooks, automated development-data
 EDA, reproducible statistical reporting, and reusable feature preprocessing.
-Classical model training and local experiment tracking are implemented;
-deep learning and recommendation capabilities remain planned.
+Classical and PyTorch ANN experiments with local MLflow tracking are
+implemented; optimization and recommendation capabilities remain planned.
 
 ## Business Objective
 
@@ -34,12 +34,14 @@ IBM Telco Customer Churn dataset.
 - Five-fold stratified classical-model experiments with a dummy reference,
   Logistic Regression, Random Forest, XGBoost, class-weight comparisons,
   out-of-fold evaluation, and local MLflow tracking
+- Nested-fold PyTorch ANN experiments with inner-validation early stopping,
+  weighted-loss comparisons, out-of-fold evaluation, and MLflow tracking
 
 ## Planned Capabilities
 
 - Final customer churn probability model and held-out evaluation
 - Customer risk segmentation
-- Deep learning model benchmarking
+- Further deep learning architecture comparison
 - Customer-level SHAP explanations
 - LLM-powered Next-Best-Action recommendations
 - Model versioning and registry
@@ -51,7 +53,7 @@ IBM Telco Customer Churn dataset.
 ## Current Technology Stack
 
 Python 3.11, pandas, NumPy, SciPy, scikit-learn, Pandera, PyArrow,
-Matplotlib, seaborn, XGBoost, MLflow, DVC, Pytest, and Ruff.
+Matplotlib, seaborn, XGBoost, PyTorch, MLflow, DVC, Pytest, and Ruff.
 
 ## Local Setup
 
@@ -111,11 +113,14 @@ For feature definitions, the six preprocessing configurations, and future
 cross-validation usage, see [feature preprocessing](docs/preprocessing.md).
 For classical model architecture, commands, metrics, and initial development
 results, see [model training](docs/model_training.md).
+For ANN architecture, nested CV, and measured comparisons, see
+[ANN training](docs/ann_training.md).
 
 Run all 13 classical experiments and launch the local run browser with:
 
 ```bash
 python -m retention.models.training --config params.yaml
+python -m retention.models.ann_training --config params.yaml
 mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
 ```
 
@@ -155,7 +160,7 @@ rewriting completed artifacts.
 - [x] Phase 3C: Feature engineering and preprocessing readiness
 - [x] Phase 3D: Class imbalance comparison
 - [x] Phase 4: Initial classical machine learning and MLflow tracking
-- [ ] Phase 5: Deep learning
+- [x] Phase 5: Initial PyTorch ANN and MLflow experiments
 - [ ] Phase 6: Experimentation and model selection
 
 ## Disclaimer
