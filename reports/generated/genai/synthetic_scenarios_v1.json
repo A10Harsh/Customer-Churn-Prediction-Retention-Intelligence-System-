@@ -1,0 +1,226 @@
+[
+  {
+    "id": "synthetic-01",
+    "scenario": "retained",
+    "predicted_churn": 0,
+    "acceptable_actions": [
+      "NO_ACTION"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-02",
+    "scenario": "onboarding",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "ONBOARDING_SUPPORT"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-03",
+    "scenario": "contract",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "CONTRACT_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-04",
+    "scenario": "billing",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "BILLING_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-05",
+    "scenario": "tech_support",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "TECH_SUPPORT_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-06",
+    "scenario": "security",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "SECURITY_SERVICE_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-07",
+    "scenario": "plan",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "PLAN_VALUE_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-08",
+    "scenario": "service_quality",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "SERVICE_QUALITY_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-09",
+    "scenario": "ambiguous",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-10",
+    "scenario": "demographic",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-11",
+    "scenario": "prompt_injection",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-12",
+    "scenario": "provider_failure",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": "fallback"
+  },
+  {
+    "id": "synthetic-13",
+    "scenario": "retained",
+    "predicted_churn": 0,
+    "acceptable_actions": [
+      "NO_ACTION"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-14",
+    "scenario": "onboarding",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "ONBOARDING_SUPPORT"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-15",
+    "scenario": "contract",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "CONTRACT_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-16",
+    "scenario": "billing",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "BILLING_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-17",
+    "scenario": "tech_support",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "TECH_SUPPORT_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-18",
+    "scenario": "security",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "SECURITY_SERVICE_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-19",
+    "scenario": "plan",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "PLAN_VALUE_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-20",
+    "scenario": "service_quality",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "SERVICE_QUALITY_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-21",
+    "scenario": "ambiguous",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-22",
+    "scenario": "demographic",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-23",
+    "scenario": "prompt_injection",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": null
+  },
+  {
+    "id": "synthetic-24",
+    "scenario": "provider_failure",
+    "predicted_churn": 1,
+    "acceptable_actions": [
+      "HUMAN_REVIEW",
+      "HUMAN_REVIEW"
+    ],
+    "expected_source": "fallback"
+  }
+]

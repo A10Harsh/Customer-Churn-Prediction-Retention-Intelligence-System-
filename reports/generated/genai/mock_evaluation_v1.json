@@ -1,0 +1,17 @@
+{
+  "evaluation_type": "mocked_rules_only",
+  "scenario_version": "1",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_version": "1",
+  "policy_version": "1",
+  "metrics": {
+    "total": 24,
+    "valid": 24,
+    "expert_agreement": 10,
+    "valid_rate": 1.0,
+    "agreement_rate": 0.4166666666666667,
+    "mean_latency_ms": 0.0
+  },
+  "live_evaluation": "pending: GOOGLE_API_KEY unavailable",
+  "mlflow_run_id": "24b0d12ffd8d4f358d2c47be9ea75cc6"
+}

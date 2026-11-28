@@ -1,0 +1,88 @@
+{
+  "database_version": "0003_recommendations",
+  "before": {
+    "customers": 1,
+    "predictions": 3,
+    "explanations": 1,
+    "recommendations": 0
+  },
+  "cases": {
+    "live_high": {
+      "prediction_id": "c9ef592c-a9ba-4808-a422-bc5950c6700b",
+      "explanation_id": "7b2171e4-0a5a-46a7-94a7-7b2184f8be6c",
+      "predicted_churn": 1,
+      "probability": 0.7102968262565937,
+      "recommendation_id": "f29ffedd-3672-4449-8568-a74c85fe53a4",
+      "source": "fallback",
+      "action": "HUMAN_REVIEW",
+      "evidence_refs": [
+        "prediction:risk"
+      ],
+      "provider": "google",
+      "model": "gemini-3.1-flash-lite",
+      "input_tokens": null,
+      "output_tokens": null,
+      "latency_ms": 34784.8038750235,
+      "idempotent": true,
+      "history_count": 1
+    },
+    "retained": {
+      "prediction_id": "4696b04f-d95e-4d47-938c-e709749e1c72",
+      "explanation_id": "21739ac4-3112-47d1-8ece-da509fbc33a5",
+      "predicted_churn": 0,
+      "probability": 0.03115840749338971,
+      "recommendation_id": "36883c67-702f-4d2f-a4aa-3d773a5bdf8e",
+      "source": "rules",
+      "action": "NO_ACTION",
+      "evidence_refs": [
+        "prediction:risk"
+      ],
+      "provider": "google",
+      "model": "gemini-3.1-flash-lite",
+      "input_tokens": null,
+      "output_tokens": null,
+      "latency_ms": 0.03362505231052637,
+      "idempotent": true,
+      "history_count": 1
+    },
+    "failure": {
+      "prediction_id": "ce69c7b4-7f33-4b24-9e92-25dec6198bc3",
+      "explanation_id": "c6b7054f-3e53-44be-b49b-2208193427cc",
+      "predicted_churn": 1,
+      "probability": 0.7102968262565937,
+      "recommendation_id": "b57656e0-4814-424b-96f7-e01f932d9156",
+      "source": "fallback",
+      "action": "HUMAN_REVIEW",
+      "evidence_refs": [
+        "prediction:risk"
+      ],
+      "provider": "google",
+      "model": "gemini-3.1-flash-lite",
+      "input_tokens": null,
+      "output_tokens": null,
+      "latency_ms": 0.8170419605448842,
+      "idempotent": true,
+      "regenerated_id": "7f5f8294-495b-4368-8215-c278c6d97f63",
+      "regeneration_new_attempt": true,
+      "history_count": 2
+    }
+  },
+  "after": {
+    "customers": 4,
+    "predictions": 6,
+    "explanations": 4,
+    "recommendations": 4
+  },
+  "post_initial_regeneration": {
+    "live_high_prediction_id": "c9ef592c-a9ba-4808-a422-bc5950c6700b",
+    "attempts": 3,
+    "successful_recommendation_id": "d80a6542-9ee7-41ed-b151-526741726411",
+    "source": "llm",
+    "action": "ONBOARDING_SUPPORT",
+    "evidence_refs": ["attr:tenure", "attr:Contract", "shap:tenure"],
+    "actual_model": "gemini-3.1-flash-lite",
+    "input_tokens": 1212,
+    "output_tokens": 224,
+    "note": "Two earlier fallback attempts were retained. The persisted text passed automated guardrails but manual review flagged unsupported wording."
+  }
+}

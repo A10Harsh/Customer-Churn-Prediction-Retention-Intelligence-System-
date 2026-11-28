@@ -1,0 +1,34 @@
+[
+  {
+    "id": "holdout-01",
+    "scenario": "early_tenure_distinct",
+    "predicted_churn": 1,
+    "attributes": {"tenure": 2, "Contract": "Two year", "TechSupport": "Yes", "InternetService": "Fiber optic", "OnlineSecurity": "Yes"},
+    "acceptable_actions": ["ONBOARDING_SUPPORT"],
+    "expected_source": null
+  },
+  {
+    "id": "holdout-02",
+    "scenario": "contract_distinct",
+    "predicted_churn": 1,
+    "attributes": {"tenure": 42, "Contract": "Month-to-month", "TechSupport": "Yes", "InternetService": "DSL", "OnlineSecurity": "Yes"},
+    "acceptable_actions": ["CONTRACT_REVIEW"],
+    "expected_source": null
+  },
+  {
+    "id": "holdout-03",
+    "scenario": "unsupported_reason_distinct",
+    "predicted_churn": 1,
+    "attributes": {"tenure": 36, "Contract": "One year", "TechSupport": "Yes", "InternetService": "DSL", "OnlineSecurity": "Yes"},
+    "acceptable_actions": ["HUMAN_REVIEW"],
+    "expected_source": null
+  },
+  {
+    "id": "holdout-04",
+    "scenario": "security_distinct",
+    "predicted_churn": 1,
+    "attributes": {"tenure": 15, "Contract": "Two year", "TechSupport": "Yes", "InternetService": "Fiber optic", "OnlineSecurity": "No"},
+    "acceptable_actions": ["SECURITY_SERVICE_REVIEW"],
+    "expected_source": null
+  }
+]

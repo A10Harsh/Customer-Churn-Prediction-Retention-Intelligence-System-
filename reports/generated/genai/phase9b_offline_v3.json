@@ -1,0 +1,50 @@
+{
+  "evaluation_type": "offline_regression_only",
+  "provider_calls": 0,
+  "provider": "google",
+  "configured_model": "gemini-3.1-flash-lite",
+  "prompt_version": "3",
+  "policy_version": "1",
+  "rendering_version": "1",
+  "original_24": {
+    "conservative_rules": {
+      "total": 24,
+      "valid": 24,
+      "expert_agreement": 10,
+      "deterministic": 24,
+      "expected_source_cases": 2,
+      "valid_rate": 1.0,
+      "agreement_rate": 0.4166666666666667,
+      "mean_latency_ms": 0.0
+    },
+    "mocked_contract": {
+      "total": 24,
+      "valid": 24,
+      "expert_agreement": 18,
+      "expected_source_cases": 2,
+      "valid_rate": 1.0,
+      "agreement_rate": 0.75,
+      "mean_latency_ms": 0.0
+    }
+  },
+  "holdout_4": {
+    "conservative_rules": {
+      "total": 4,
+      "valid": 4,
+      "deterministic": 4,
+      "expert_agreement": 1,
+      "valid_rate": 1.0,
+      "agreement_rate": 0.25,
+      "mean_latency_ms": 0.0
+    },
+    "mocked_contract": {
+      "total": 4,
+      "valid": 4,
+      "expert_agreement": 4,
+      "valid_rate": 1.0,
+      "agreement_rate": 1.0,
+      "mean_latency_ms": 0.0
+    }
+  },
+  "mlflow_run_id": "f0531d59eed34e5aad3f9286a619998c"
+}

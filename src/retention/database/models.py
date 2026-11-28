@@ -10,6 +10,7 @@ from sqlalchemy import (
     DateTime,
     Float,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     Numeric,
@@ -138,6 +139,7 @@ class Prediction(Base):
 class Explanation(Base):
     __tablename__ = "explanations"
     __table_args__ = (
+        UniqueConstraint("id", "prediction_id", name="uq_explanations_id_prediction"),
         UniqueConstraint(
             "prediction_id",
             "explanation_method",
@@ -202,3 +204,58 @@ class Explanation(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     prediction: Mapped[Prediction] = relationship(back_populates="explanations")
+
+
+class RecommendationRecord(Base):
+    """Immutable recommendation generation result."""
+
+    __tablename__ = "recommendations"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["explanation_id", "prediction_id"],
+            ["explanations.id", "explanations.prediction_id"],
+            ondelete="RESTRICT",
+            name="fk_recommendations_matching_explanation",
+        ),
+        UniqueConstraint(
+            "prediction_id",
+            "request_fingerprint",
+            "attempt",
+            name="uq_recommendations_request_attempt",
+        ),
+        CheckConstraint("attempt >= 1", name="ck_recommendations_attempt"),
+        CheckConstraint("latency_ms >= 0", name="ck_recommendations_latency"),
+        CheckConstraint(
+            "generation_source IN ('llm', 'rules', 'fallback')",
+            name="ck_recommendations_source",
+        ),
+        CheckConstraint(
+            "jsonb_typeof(payload) = 'object'", name="ck_recommendations_payload"
+        ),
+        Index("ix_recommendations_prediction_time", "prediction_id", "created_at"),
+    )
+
+    id: Mapped[UUID] = mapped_column(
+        PGUUID(as_uuid=True), primary_key=True, default=uuid4
+    )
+    prediction_id: Mapped[UUID] = mapped_column(
+        ForeignKey("predictions.id", ondelete="RESTRICT"), nullable=False
+    )
+    explanation_id: Mapped[UUID] = mapped_column(
+        ForeignKey("explanations.id", ondelete="RESTRICT"), nullable=False
+    )
+    action_id: Mapped[str] = mapped_column(String(32), nullable=False)
+    payload: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    provider: Mapped[str] = mapped_column(String(32), nullable=False)
+    model: Mapped[str] = mapped_column(String(128), nullable=False)
+    prompt_version: Mapped[str] = mapped_column(String(32), nullable=False)
+    policy_version: Mapped[str] = mapped_column(String(32), nullable=False)
+    generation_source: Mapped[str] = mapped_column(String(16), nullable=False)
+    request_fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    attempt: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    latency_ms: Mapped[float] = mapped_column(Float(53), nullable=False)
+    input_tokens: Mapped[int | None] = mapped_column(Integer)
+    output_tokens: Mapped[int | None] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )

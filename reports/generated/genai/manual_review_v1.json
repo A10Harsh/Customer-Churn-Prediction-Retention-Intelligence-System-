@@ -1,0 +1,24 @@
+{
+  "method": "Manual review of all generated synthetic recommendation text. A flag means at least one claim or presupposition lacks direct support in the supplied context; it is separate from schema and automated policy checks.",
+  "prompt_v1": {
+    "generated_denominator": 18,
+    "evidence_reference_ids_grounded": 0,
+    "unsupported_or_overconfident_text_flagged": 18,
+    "unsupported_specific_financial_offers": 0,
+    "flagged_ids": ["synthetic-02", "synthetic-03", "synthetic-04", "synthetic-05", "synthetic-06", "synthetic-07", "synthetic-08", "synthetic-09", "synthetic-10", "synthetic-11", "synthetic-14", "synthetic-15", "synthetic-17", "synthetic-18", "synthetic-19", "synthetic-20", "synthetic-22", "synthetic-23"],
+    "findings": ["Unqualified high churn-risk severity from a class-only context", "Claims of service use or satisfaction not present in attributes", "Assumed outcomes or benefits of interventions", "Evidence-reference strings do not use exact supplied IDs"]
+  },
+  "prompt_v2_holdout": {
+    "generated_denominator": 4,
+    "evidence_reference_ids_grounded": 4,
+    "unsupported_or_overconfident_text_flagged": 4,
+    "unsupported_specific_financial_offers": 0,
+    "flagged_ids": ["holdout-01", "holdout-02", "holdout-03", "holdout-04"],
+    "findings_by_id": {
+      "holdout-01": "Implies support ensures or maximizes value without outcome evidence",
+      "holdout-02": "Asserts contract-churn association and better stability without supplied attribution or outcome evidence",
+      "holdout-03": "Calls the predicted class high risk without a defined severity rule",
+      "holdout-04": "Presupposes available security service packages not specified in the context"
+    }
+  }
+}

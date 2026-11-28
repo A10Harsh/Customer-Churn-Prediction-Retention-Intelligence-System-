@@ -49,11 +49,17 @@ The pipeline generates a JSON report containing:
 
 DVC manages dataset versions, stage dependencies, configuration parameters and generated artifacts.
 
-Execute the pipeline using:
+Inspect the pipeline using:
 
 ```bash
-dvc repro
+dvc status
+dvc repro --dry
+.venv/bin/python scripts/check_deps_consistency.py
 ```
+
+Phase 9B replaced the global environment lock dependency in `dvc.yaml` with generated manifests in `dvc/deps-*.txt`. The complete resolved environment remains in `requirements-lock.txt`; regenerate the stage manifests after a relevant dependency change with `.venv/bin/python scripts/check_deps_consistency.py --write`. The checker includes active transitive requirements and runtime metadata, then fails when a manifest is stale.
+
+Historical `dvc.lock` still records the former global lock dependency. All seven stages therefore show changed dependencies, and the dry run includes protected final training and held-out evaluation. Do not run unrestricted reproduction while the frozen provenance migration is unresolved. The historical hashes and exact blocker are documented in [Phase 9B DVC audit](genai_nba.md).
 
 ## Data Leakage Prevention
 

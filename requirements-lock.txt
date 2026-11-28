@@ -83,6 +83,7 @@ Faker==40.54.0
 fastapi==0.150.0
 fastjsonschema==2.22.3
 filelock==4.2.11
+filetype==1.2.0
 Flask==3.1.3
 flask-cors==6.0.5
 flatten-dict==0.6.0
@@ -96,6 +97,7 @@ funcy==2.1
 gitdb==4.0.12
 GitPython==3.2.1
 google-auth==2.62.2
+google-genai==3.6.1
 grandalf==0.8
 graphene==3.4.3
 graphql-core==3.2.14
@@ -111,8 +113,10 @@ h11==0.16.0
 h2==4.4.1
 hpack==4.2.0
 httpcore==1.0.9
+httpcore2==2.16.2
 httptools==0.9.0
 httpx==0.28.1
+httpx2==2.16.2
 huey==3.5.4
 humanize==4.17.0
 hydra-core==1.3.8
@@ -150,6 +154,10 @@ jupyterlab_pygments==0.3.0
 jupyterlab_server==2.28.1
 kiwisolver==1.5.1
 kombu==5.7.0
+langchain-core==1.8.5
+langchain-google-genai==4.5.3
+langchain-protocol==0.0.22
+langsmith==0.16.2
 lark==1.3.1
 lazy-importer==0.1.0
 litestar==2.25.0
@@ -250,6 +258,7 @@ referencing==0.37.0
 regex==2026.11.15
 requests==2.34.2
 requests-oauthlib==2.0.0
+requests-toolbelt==1.0.0
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rfc3987-syntax==1.1.0
@@ -266,6 +275,7 @@ scmrepo==3.6.2
 seaborn==0.13.2
 semver==3.1.2
 Send2Trash==2.2.0
+setuptools==80.10.2
 shap==0.51.0
 shellingham==1.5.4
 shortuuid==1.0.13
@@ -285,7 +295,7 @@ statsmodels==0.15.0
 streamlit==1.67.0
 sympy==1.14.0
 tabulate==0.10.0
-tenacity==9.2.1
+tenacity==9.1.4
 terminado==0.18.1
 text-unidecode==1.3
 threadpoolctl==3.8.0
@@ -296,6 +306,7 @@ torch==2.15.0
 tornado==6.6.1
 tqdm==4.70.1
 traitlets==5.16.1
+truststore==0.10.5
 typeguard==4.6.0
 typer==0.29.1
 typing-inspect==0.9.0
@@ -308,6 +319,7 @@ uncalled-for==0.6.1
 uri-template==1.3.0
 urllib3==2.8.0
 uuid6==2025.0.1
+uuid_utils==0.20.0
 uvicorn==0.54.0
 uvloop==0.23.0
 vine==5.1.0
@@ -324,6 +336,8 @@ Werkzeug==3.1.9
 whenever==0.11.0
 wrapt==2.5.2
 xgboost==3.2.0
+xxhash==4.1.0
 yarl==1.25.1
 zc.lockfile==4.1
 zipp==4.1.2
+zstandard==0.25.0

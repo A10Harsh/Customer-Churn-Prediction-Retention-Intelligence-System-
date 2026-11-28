@@ -230,3 +230,7 @@ Phase 8 raw-margin SHAP semantics, prediction-linked explanation persistence,
 development-only global charts, and local test commands are documented in
 [docs/explainability.md](docs/explainability.md). Explanations are descriptive
 and are not retention recommendations.
+
+## Phase 9 — GenAI next-best-action
+
+The recommendation service proposes policy-constrained actions from saved predictions and SHAP explanations. Prompt v3 limits Gemini to action, evidence, reason-code, and approval selection; Python templates render recommendation prose. The preserved 24-case conservative baseline still matches 10/24 preferred actions. Three rate-limited v3 provider calls returned schema-valid selections, but none passed the stricter reason/evidence check; invalid output falls back to human review. Mocked and PostgreSQL integration checks verify grounded rendering and persistence. Stage-specific DVC dependency manifests now isolate data, analysis, and ML closures, but all seven stages remain changed in `dvc status` because protected historical provenance has not been migrated. See [Phase 9B verification, MLflow runs, DVC status, and limits](docs/genai_nba.md). No customer interventions were executed; Phase 10 has not started.

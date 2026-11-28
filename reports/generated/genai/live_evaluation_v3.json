@@ -1,0 +1,110 @@
+{
+  "evaluation_type": "phase9b_limited_live",
+  "provider": "google",
+  "configured_model": "gemini-3.1-flash-lite",
+  "prompt_version": "3",
+  "policy_version": "1",
+  "rendering_version": "1",
+  "scenario_version": "1",
+  "metrics": {
+    "scenarios_total": 24,
+    "scenarios_processed": 4,
+    "llm_applicable": 20,
+    "llm_attempted": 2,
+    "llm_generated": 2,
+    "llm_failed": 0,
+    "deterministic_no_action": 1,
+    "simulated_fallback": 1,
+    "schema_valid": 2,
+    "policy_compliant": 0,
+    "eligible": 2,
+    "preferred_agreement": 2,
+    "acceptable_agreement": 2,
+    "median_latency_ms": 2306.9049999999997,
+    "p95_latency_ms": 2841.7704999999996,
+    "input_tokens_reported": 2,
+    "output_tokens_reported": 2,
+    "input_tokens_total": 912,
+    "output_tokens_total": 127,
+    "llm_accepted": 0,
+    "policy_rejected": 2
+  },
+  "failure_categories": {},
+  "records": [
+    {
+      "id": "synthetic-01",
+      "scenario": "retained",
+      "source": "rules",
+      "action": "NO_ACTION",
+      "policy_compliant": true,
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "synthetic-02",
+      "scenario": "onboarding",
+      "latency_ms": 1712.61,
+      "schema_valid": true,
+      "action": "ONBOARDING_SUPPORT",
+      "selection": {
+        "action_id": "ONBOARDING_SUPPORT",
+        "evidence_ids": [
+          "attr:tenure"
+        ],
+        "reason_codes": [
+          "PREDICTED_CHURN_RISK",
+          "EARLY_TENURE"
+        ],
+        "human_review_required": false
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 456,
+      "output_tokens": 65,
+      "policy_compliant": false,
+      "validation_failure": "Churn-risk reason lacks prediction evidence",
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "synthetic-03",
+      "scenario": "contract",
+      "latency_ms": 2901.2,
+      "schema_valid": true,
+      "action": "CONTRACT_REVIEW",
+      "selection": {
+        "action_id": "CONTRACT_REVIEW",
+        "evidence_ids": [
+          "attr:Contract"
+        ],
+        "reason_codes": [
+          "PREDICTED_CHURN_RISK",
+          "MONTH_TO_MONTH"
+        ],
+        "human_review_required": false
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 456,
+      "output_tokens": 62,
+      "policy_compliant": false,
+      "validation_failure": "Churn-risk reason lacks prediction evidence",
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "synthetic-12",
+      "scenario": "provider_failure",
+      "source": "simulated_fallback",
+      "action": "HUMAN_REVIEW",
+      "policy_compliant": true,
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    }
+  ],
+  "mlflow_run_id": "e81984ba1498415d83c9cc0046a60473"
+}

@@ -1,0 +1,57 @@
+# Illustrative assumptions for this project; these are not IBM policies.
+version: '1'
+actions:
+  NO_ACTION:
+    priority: low
+    channels: [none]
+    approval_required: false
+    eligibility: retained
+    restrictions: [no_proactive_contact]
+  ONBOARDING_SUPPORT:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: early_tenure
+    restrictions: [no_unapproved_offer]
+  CONTRACT_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: month_to_month
+    restrictions: [no_unapproved_offer]
+  TECH_SUPPORT_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: no_tech_support
+    restrictions: [no_unapproved_offer]
+  SERVICE_QUALITY_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: service_customer
+    restrictions: [do_not_assert_complaints]
+  BILLING_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: all_churn
+    restrictions: [no_unapproved_offer]
+  PLAN_VALUE_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: service_customer
+    restrictions: [no_unapproved_offer]
+  SECURITY_SERVICE_REVIEW:
+    priority: medium
+    channels: [phone, email]
+    approval_required: true
+    eligibility: no_online_security
+    restrictions: [no_unapproved_offer]
+  HUMAN_REVIEW:
+    priority: high
+    channels: [internal]
+    approval_required: true
+    eligibility: always
+    restrictions: [no_automatic_intervention]
