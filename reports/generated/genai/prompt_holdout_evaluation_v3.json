@@ -1,0 +1,63 @@
+{
+  "evaluation_type": "live_gemini_smoke",
+  "provider": "google",
+  "configured_model": "gemini-3.1-flash-lite",
+  "prompt_version": "3",
+  "policy_version": "1",
+  "rendering_version": "1",
+  "scenario_version": "holdout-1",
+  "metrics": {
+    "scenarios_total": 4,
+    "scenarios_processed": 1,
+    "llm_applicable": 4,
+    "llm_attempted": 1,
+    "llm_generated": 1,
+    "llm_failed": 0,
+    "deterministic_no_action": 0,
+    "simulated_fallback": 0,
+    "schema_valid": 1,
+    "policy_compliant": 0,
+    "eligible": 1,
+    "preferred_agreement": 1,
+    "acceptable_agreement": 1,
+    "median_latency_ms": 2033.76,
+    "p95_latency_ms": 2033.76,
+    "input_tokens_reported": 1,
+    "output_tokens_reported": 1,
+    "input_tokens_total": 498,
+    "output_tokens_total": 76,
+    "llm_accepted": 0,
+    "policy_rejected": 1
+  },
+  "failure_categories": {},
+  "records": [
+    {
+      "id": "holdout-02",
+      "scenario": "contract_distinct",
+      "latency_ms": 2033.76,
+      "schema_valid": true,
+      "action": "CONTRACT_REVIEW",
+      "selection": {
+        "action_id": "CONTRACT_REVIEW",
+        "evidence_ids": [
+          "attr:Contract"
+        ],
+        "reason_codes": [
+          "PREDICTED_CHURN_RISK",
+          "MONTH_TO_MONTH"
+        ],
+        "human_review_required": true
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 498,
+      "output_tokens": 76,
+      "policy_compliant": false,
+      "validation_failure": "Churn-risk reason lacks prediction evidence",
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    }
+  ],
+  "mlflow_run_id": "cfb49ae95fd34c39b762b68346813476"
+}

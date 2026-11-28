@@ -9,7 +9,7 @@ stages:
       - src/retention/data/ingestion.py
       - src/retention/utils/config.py
       - src/retention/utils/logger.py
-      - requirements-lock.txt
+      - dvc/deps-data.txt
 
     params:
       - data.raw_path
@@ -32,7 +32,7 @@ stages:
       - src/retention/data/quality.py
       - src/retention/utils/config.py
       - src/retention/utils/logger.py
-      - requirements-lock.txt
+      - dvc/deps-data.txt
 
     params:
       - data.ingested_path
@@ -55,7 +55,7 @@ stages:
       - src/retention/data/quality.py
       - src/retention/utils/config.py
       - src/retention/utils/logger.py
-      - requirements-lock.txt
+      - dvc/deps-data.txt
 
     params:
       - project.random_state
@@ -89,7 +89,7 @@ stages:
       - src/retention/analysis/eda.py
       - src/retention/utils/config.py
       - src/retention/utils/logger.py
-      - requirements-lock.txt
+      - dvc/deps-analysis.txt
 
     params:
       - project.random_state
@@ -117,7 +117,7 @@ stages:
       - src/retention/analysis/statistical_analysis.py
       - src/retention/utils/config.py
       - src/retention/utils/logger.py
-      - requirements-lock.txt
+      - dvc/deps-analysis.txt
 
     params:
       - project.random_state
@@ -147,7 +147,7 @@ stages:
       - src/retention/evaluation/calibration.py
       - src/retention/evaluation/metrics.py
       - params.yaml
-      - requirements-lock.txt
+      - dvc/deps-training.txt
     outs:
       - artifacts/final_model/predictor.joblib
       - artifacts/final_model/readiness.json
@@ -162,6 +162,6 @@ stages:
       - src/retention/evaluation/final_evaluation.py
       - src/retention/models/predictor.py
       - params.yaml
-      - requirements-lock.txt
+      - dvc/deps-training.txt
     outs:
       - reports/generated/final_evaluation

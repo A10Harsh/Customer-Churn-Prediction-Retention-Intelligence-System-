@@ -1,0 +1,164 @@
+{
+  "evaluation_type": "refined_prompt_holdout",
+  "provider": "google",
+  "configured_model": "gemini-3.1-flash-lite",
+  "prompt_version": "2",
+  "policy_version": "1",
+  "scenario_version": "holdout-1",
+  "metrics": {
+    "scenarios_total": 4,
+    "scenarios_processed": 4,
+    "llm_applicable": 4,
+    "llm_attempted": 4,
+    "llm_generated": 4,
+    "llm_failed": 0,
+    "deterministic_no_action": 0,
+    "simulated_fallback": 0,
+    "schema_valid": 4,
+    "policy_compliant": 4,
+    "eligible": 4,
+    "preferred_agreement": 4,
+    "acceptable_agreement": 4,
+    "median_latency_ms": 2047.2399999999998,
+    "p95_latency_ms": 6971.840999999997,
+    "input_tokens_reported": 4,
+    "output_tokens_reported": 4,
+    "input_tokens_total": 1830,
+    "output_tokens_total": 757
+  },
+  "failure_categories": {},
+  "records": [
+    {
+      "id": "holdout-01",
+      "scenario": "early_tenure_distinct",
+      "latency_ms": 7786.95,
+      "schema_valid": true,
+      "action": "ONBOARDING_SUPPORT",
+      "recommendation": {
+        "action_id": "ONBOARDING_SUPPORT",
+        "priority": "medium",
+        "channel": "email",
+        "summary": "Proactive onboarding support for early tenure customer",
+        "rationale": "The customer is in their early tenure period and is identified as a churn risk. Providing onboarding support can help ensure they are maximizing the value of their fiber optic service and security features.",
+        "evidence_refs": [
+          "attr:tenure",
+          "prediction:risk"
+        ],
+        "talking_points": [
+          "Confirm satisfaction with fiber optic service",
+          "Review current security and tech support features",
+          "Ensure account setup meets expectations"
+        ],
+        "human_approval_required": true,
+        "limitations": "No unapproved offers or discounts may be provided during this outreach."
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 469,
+      "output_tokens": 189,
+      "policy_compliant": true,
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "holdout-02",
+      "scenario": "contract_distinct",
+      "latency_ms": 1693.56,
+      "schema_valid": true,
+      "action": "CONTRACT_REVIEW",
+      "recommendation": {
+        "action_id": "CONTRACT_REVIEW",
+        "priority": "medium",
+        "channel": "phone",
+        "summary": "Review contract terms for month-to-month customer",
+        "rationale": "The customer is currently on a month-to-month contract, which is a factor associated with churn risk. A review of contract options may provide better stability for the customer.",
+        "evidence_refs": [
+          "attr:Contract",
+          "prediction:risk"
+        ],
+        "talking_points": [
+          "Discuss current month-to-month contract status",
+          "Explore potential long-term service agreement benefits",
+          "Review current service satisfaction"
+        ],
+        "human_approval_required": true,
+        "limitations": "No unapproved offers or discounts may be presented during this review."
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 471,
+      "output_tokens": 190,
+      "policy_compliant": true,
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "holdout-03",
+      "scenario": "unsupported_reason_distinct",
+      "latency_ms": 1741.59,
+      "schema_valid": true,
+      "action": "HUMAN_REVIEW",
+      "recommendation": {
+        "action_id": "HUMAN_REVIEW",
+        "priority": "high",
+        "channel": "internal",
+        "summary": "High churn risk assessment requiring manual review",
+        "rationale": "The customer is identified as high churn risk based on predictive modeling. Given the lack of specific behavioral factors or service complaints in the provided data, a manual review is necessary to determine the appropriate retention strategy.",
+        "evidence_refs": [
+          "prediction:risk"
+        ],
+        "talking_points": [
+          "Review customer tenure and service history",
+          "Assess current contract status",
+          "Evaluate potential retention outreach"
+        ],
+        "human_approval_required": true,
+        "limitations": "SHAP attribution is not available to explain the risk prediction. No specific service issues or billing concerns were identified in the provided attributes."
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 419,
+      "output_tokens": 192,
+      "policy_compliant": true,
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    },
+    {
+      "id": "holdout-04",
+      "scenario": "security_distinct",
+      "latency_ms": 2352.89,
+      "schema_valid": true,
+      "action": "SECURITY_SERVICE_REVIEW",
+      "recommendation": {
+        "action_id": "SECURITY_SERVICE_REVIEW",
+        "priority": "medium",
+        "channel": "email",
+        "summary": "Review online security options for fiber optic customer",
+        "rationale": "The customer is currently subscribed to fiber optic internet but lacks online security services, which is a key factor in their current service configuration.",
+        "evidence_refs": [
+          "attr:OnlineSecurity",
+          "attr:InternetService"
+        ],
+        "talking_points": [
+          "Discuss the benefits of adding online security to your fiber optic plan.",
+          "Review current security needs for your home network.",
+          "Explore available security service packages."
+        ],
+        "human_approval_required": true,
+        "limitations": "No unapproved offers may be presented during this review."
+      },
+      "actual_model": "gemini-3.1-flash-lite",
+      "input_tokens": 471,
+      "output_tokens": 186,
+      "policy_compliant": true,
+      "source": "llm",
+      "preferred_agreement": true,
+      "acceptable_agreement": true,
+      "eligible": true
+    }
+  ],
+  "mlflow_run_id": "1d776adf2ef1478493dd11b27766246b"
+}

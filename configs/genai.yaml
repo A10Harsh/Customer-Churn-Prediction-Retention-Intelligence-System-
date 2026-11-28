@@ -1,0 +1,10 @@
+provider: google
+model: gemini-3.1-flash-lite
+temperature: 0
+request_timeout: 30
+max_retries: 1
+max_output_tokens: 512
+prompt_version: '3'
+policy_version: '1'
+fallback:
+  enabled: true

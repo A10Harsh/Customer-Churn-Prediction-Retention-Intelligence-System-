@@ -21,6 +21,8 @@ dependencies = [
     "psycopg[binary]>=3.2,<4",
     "alembic>=1.16,<2",
     "shap>=0.51,<0.52",
+    "langchain-core>=1,<2",
+    "langchain-google-genai>=4,<5",
 ]
 [project.optional-dependencies]
 
