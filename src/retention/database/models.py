@@ -8,6 +8,7 @@ from sqlalchemy import (
     BigInteger,
     CheckConstraint,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -129,3 +130,75 @@ class Prediction(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     customer: Mapped[Customer] = relationship(back_populates="predictions")
+    explanations: Mapped[list["Explanation"]] = relationship(
+        back_populates="prediction"
+    )
+
+
+class Explanation(Base):
+    __tablename__ = "explanations"
+    __table_args__ = (
+        UniqueConstraint(
+            "prediction_id",
+            "explanation_method",
+            "explanation_version",
+            "explainer_fingerprint",
+            "top_k",
+            name="uq_explanations_request",
+        ),
+        CheckConstraint("top_k BETWEEN 1 AND 19", name="ck_explanations_top_k"),
+        CheckConstraint(
+            "explained_output_space = 'raw_xgboost_margin'",
+            name="ck_explanations_output_space",
+        ),
+        CheckConstraint(
+            "jsonb_typeof(full_payload) = 'object'",
+            name="ck_explanations_payload_object",
+        ),
+        CheckConstraint(
+            "jsonb_typeof(original_feature_contributions) = 'array'",
+            name="ck_explanations_contributions_array",
+        ),
+        CheckConstraint(
+            "jsonb_typeof(top_risk_increasing) = 'array' AND "
+            "jsonb_typeof(top_risk_decreasing) = 'array'",
+            name="ck_explanations_factors_array",
+        ),
+        CheckConstraint(
+            "raw_probability >= 0 AND raw_probability <= 1 AND "
+            "calibrated_probability >= 0 AND calibrated_probability <= 1",
+            name="ck_explanations_probabilities",
+        ),
+        CheckConstraint(
+            "length(model_fingerprint) = 64 AND length(explainer_fingerprint) = 64",
+            name="ck_explanations_fingerprints",
+        ),
+    )
+
+    id: Mapped[UUID] = mapped_column(
+        PGUUID(as_uuid=True), primary_key=True, default=uuid4
+    )
+    prediction_id: Mapped[UUID] = mapped_column(
+        ForeignKey("predictions.id", ondelete="RESTRICT"), nullable=False
+    )
+    explanation_method: Mapped[str] = mapped_column(String(32), nullable=False)
+    explanation_version: Mapped[str] = mapped_column(String(16), nullable=False)
+    top_k: Mapped[int] = mapped_column(Integer, nullable=False)
+    explained_output_space: Mapped[str] = mapped_column(String(32), nullable=False)
+    base_value: Mapped[float] = mapped_column(Float(53), nullable=False)
+    raw_margin: Mapped[float] = mapped_column(Float(53), nullable=False)
+    raw_probability: Mapped[Decimal] = mapped_column(Numeric(22, 20), nullable=False)
+    calibrated_probability: Mapped[Decimal] = mapped_column(
+        Numeric(22, 20), nullable=False
+    )
+    additivity_residual: Mapped[float] = mapped_column(Float(53), nullable=False)
+    full_payload: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    original_feature_contributions: Mapped[list] = mapped_column(JSONB, nullable=False)
+    top_risk_increasing: Mapped[list] = mapped_column(JSONB, nullable=False)
+    top_risk_decreasing: Mapped[list] = mapped_column(JSONB, nullable=False)
+    model_fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    explainer_fingerprint: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    prediction: Mapped[Prediction] = relationship(back_populates="explanations")
