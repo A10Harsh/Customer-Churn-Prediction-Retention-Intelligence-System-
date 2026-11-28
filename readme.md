@@ -200,6 +200,7 @@ rewriting completed artifacts.
 - [x] Phase 6A++: Development-only diagnostics and retained selection
 - [x] Phase 6B: Final training integration and held-out evaluation
 - [x] Phase 7: PostgreSQL persistence and local integration verification
+- [x] Phase 8: Raw-margin SHAP explanation and prediction-linked persistence
 
 ## Disclaimer
 
@@ -222,3 +223,10 @@ Phase 7 database architecture, local PostgreSQL initialization, migrations,
 synthetic persistence checks, and isolated test setup are documented in
 [docs/database.md](docs/database.md). Database integration requires a local
 PostgreSQL server and uses environment-provided credentials.
+
+## Model explanations
+
+Phase 8 raw-margin SHAP semantics, prediction-linked explanation persistence,
+development-only global charts, and local test commands are documented in
+[docs/explainability.md](docs/explainability.md). Explanations are descriptive
+and are not retention recommendations.
